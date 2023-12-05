@@ -55,11 +55,11 @@ char        g_Name     [128] = {0,};
 int         g_Len            = 0;
 ```
 - 변수의 이름은 고유해야 한다
-	- `ii` `jj` `tmp` `len` 과 같은 임시 변수의 경우는 제외
+    - `ii` `jj` `tmp` `len` 과 같은 임시 변수의 경우는 제외
 -  단일 문자는 사용 금지
-	- `i` ( X )→ `ii`
-	- `j` ( X )→ `jj`
-	- `a` `b` `c`→ 절대 사용 금지
+    - `i` ( X )→ `ii`
+    - `j` ( X )→ `jj`
+    - `a` `b` `c`→ 절대 사용 금지
 - 추측 가능한 변수의 이름 사용
 - 줄 맞추기
 ```c
@@ -73,15 +73,15 @@ char    *code     = NULL;    //char형 변수 + pointer
 ```c
 if (condition)
 {
-	contents;
+    contents;
 }
 ```
 
 ```c
 if (condition1 ||
-	condition2)
+    condition2)
 {
-	contents;
+    contents;
 }
 ```
 
@@ -99,49 +99,49 @@ else
 ```c
 while (condition)
 {
-	contents;
+    contents;
 }
 ```
 
 ```c
 for (init; condition; step)
 {
-	contents;
+    contents;
 }
 ```
 
 ```c
 switch (variable)
 {
-	case 0:
-		contents;
-		break;
-	case 1:
-		contents;
-		break;
-	default:
-		contents;
-		break;
+    case 0:
+        contents;
+        break;
+    case 1:
+        contents;
+        break;
+    default:
+        contents;
+        break;
 }
 
 switch (variable)
 {
-	case 0:  contents; break;
-	case 1:  contents; break;
-	default: contents; break;
+    case 0:  contents; break;
+    case 1:  contents; break;
+    default: contents; break;
 }
 ```
 
 - contents가 한 줄인 경우
 ```c
 if (condition)
-	contents;
+    contents;
 
 while (condition)
-	contents;
+    contents;
 
 for (init; condition; step)
-	contents;
+    contents;
 ```
 
 ```c
@@ -161,9 +161,9 @@ for (init; condition; step) contents;
 FUNCTION    : Customfunction
 DESCRIPTION :
 PARAMETERS  : int AAA - 설명
-			  int BBB - 설명
-			  int CCC - 설명
-			  int DDD - 설명
+              int BBB - 설명
+              int CCC - 설명
+              int DDD - 설명
 RETURNED    : 1(SUCCESS)
 ******************************************************************************/
 int Customfunction(int AAA, int BBB, int CCC, int DDD)
@@ -177,13 +177,13 @@ int Customfunction(int AAA, int BBB, int CCC, int DDD)
 FUNCTION    : Customfunction
 DESCRIPTION :
 PARAMETERS  : int AAA - 설명
-			  int BBB - 설명
-			  int CCC - 설명
-			  int DDD - 설명
+              int BBB - 설명
+              int CCC - 설명
+              int DDD - 설명
 RETURNED    : 1(SUCCESS)
 ******************************************************************************/
 int Customfunction(int AAA, int BBB,
-				   int CCC, int DDD)
+                   int CCC, int DDD)
 {
 
 }
@@ -194,26 +194,26 @@ int Customfunction(int AAA, int BBB,
 FUNCTION    : Customfunction
 DESCRIPTION :
 PARAMETERS  : int AAA - 설명
-			  int BBB - 설명
-			  int CCC - 설명
-			  int DDD - 설명
+              int BBB - 설명
+              int CCC - 설명
+              int DDD - 설명
 RETURNED    : 1(SUCCESS)
 ******************************************************************************/
 int Customfunction(int AAA,
-				   int BBB,
-				   int CCC,
-				   int DDD)
+                   int BBB,
+                   int CCC,
+                   int DDD)
 {
 
 }
 ```
 ## Fomatting
 - 한 줄에 최대 80글자까지 허용
-	- 예외의 경우 80라인 초과 가능
-		- 파일 경로
-		- URL
-		- printf()
-		- 주석
+    - 예외의 경우 80라인 초과 가능
+        - 파일 경로
+        - URL
+        - printf()
+        - 주석
 - Tab의 크기는 4 space
 - 기본적으로 BSD(Allman) style 적용
 ```c
@@ -226,16 +226,16 @@ DATA        :
 
 int main()
 {
-	if (true)
-	{
-		printf("Hello, World!\n");
-	}
-	else
-	{
-		printf("Goodbye, World!\n");
-	}
+    if (true)
+    {
+        printf("Hello, World!\n");
+    }
+    else
+    {
+        printf("Goodbye, World!\n");
+    }
 
-	return 0;
+    return 0;
 }
 ```
 
@@ -304,8 +304,8 @@ int Customfunction()
 
 typedef struct _TABLE
 {
-	int  AAA             ; /* Member name */
-	char BBB       [10+1]; /* Member name */
+    int  AAA             ; /* Member name */
+    char BBB       [10+1]; /* Member name */
 } TABLE
 
 #endif  /* _TABLE_H_ */
