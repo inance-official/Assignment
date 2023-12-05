@@ -207,6 +207,7 @@ int Customfunction(int AAA,
 
 }
 ```
+
 ## Fomatting
 - 한 줄에 최대 80글자까지 허용
     - 예외의 경우 80라인 초과 가능
@@ -252,7 +253,7 @@ int main()
 * DESCRIPTION      :
 * DATA             :
 ******************************************************************************/
-#ifndef _DEFINE_H_    // 중복 정의 방지 매크로 시작
+#ifndef _DEFINE_H_       // 중복 정의 방지 매크로 시작
 #define _DEFINE_H_
 
 /*--- define ---*/
@@ -297,10 +298,10 @@ int Customfunction()
 * DESCRIPTION      :
 * DATA             :
 ******************************************************************************/
-#ifndef _TABLE_H_      // 중복 정의 방지 매크로 시작
+#ifndef _TABLE_H_          // 중복 정의 방지 매크로 시작
 #define _TABLE_H_
 
-#include "header.h"    // 참조할 헤더파일
+#include "header.h"        // 참조할 헤더파일
 
 typedef struct _TABLE
 {
