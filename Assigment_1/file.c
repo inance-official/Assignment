@@ -18,10 +18,10 @@ int 	 g_LIdx 	= 0;
 
 
 /*******************************************************************************
-* FUNCTION:    Add
+* FUNCTION:    Insert
 * DESCRIPTION: 레코드 형식으로 추가하는 함수
 *******************************************************************************/
-int Add()
+int Insert()
 {
 	FILE 	*fp;
 	int		 ii = 0;
@@ -163,7 +163,7 @@ int main()
 	while (escape)
 	{
 		printf("------------------\n");
-		printf("[1] Add           \n");
+		printf("[1] Insert        \n");
 		printf("[2] Read          \n");
 		printf("[3] Search        \n");
 		printf("[4] Exit          \n");
@@ -173,44 +173,45 @@ int main()
 		scanf("%d", &uopt);
 		printf("------------------\n");
 
-		switch (uopt)
-		{
-			case 1:
-				printf("\n");
-				printf("[ 새 항목을 추가합니다. ]            \n");
-				Add();
-				printf("\n");
-				break;
+        switch (uopt)
+        {
+            case 1:
+                printf("\n");
+                printf("[ Insert a new Code & Name ]            \n");
+                Insert();
+                printf("\n");
+                break;
 
-			case 2:
-				printf("\n");
-				printf("[ 목록을 읽어옵니다. ]              \n");
-				Read();
-				printf("\n");
-				break;
+            case 2:
+                printf("\n");
+                printf("[ Read the list (file.txt) ]            \n");
+                Read();
+                printf("\n");
+                break;
 
-			case 3:
-				printf("\n");
-				printf("[ 코드를 입력해 이름을 검색합니다. ]\n");
-				Search();
-				printf("\n");
-				break;
+            case 3:
+                printf("\n");
+                printf("[ Enter the code to search for a name. ]\n");
+                Search();
+                printf("\n");
+                break;
 
-			case 4:
-				printf("\n");
-				printf("[ 프로그램을 종료합니다. ]         \n");
-				printf("\n");
-				escape = false;
-				break;
-			//	return 0;
+            case 4:
+                printf("\n");
+                printf("[ Exit the Program. ]                   \n");
+                printf("\n");
+                escape = false;
+                break;
+            //  return 0;
 
-			default :
-				printf("\n");
-				printf("[ 알수 없는 명령입니다. ]          \n");
-				printf("\n");
-		}
-	}
+            default :
+                printf("\n");
+                printf("[ This is an unknown command. ]        \n");
+                printf("\n");
+        }
+    }
 
+	/*--- 동적 할당 해제 ---*/
 	free(g_List);
 
 	return 0;

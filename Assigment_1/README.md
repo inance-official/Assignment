@@ -1,6 +1,6 @@
-#file 
+#file
 # Question
-10자리 code와 41자리 name을 파일에 쓰고 읽어오고 code를 기준으로 검색 가능한 프로그램 만들기
+9자리 code와 40자리 name을 파일에 쓰고 읽어오고 code를 기준으로 검색 가능한 프로그램 만들기
 
 - file.c
 - file.txt
@@ -12,7 +12,7 @@
 - `fopen()` / `fclose()`
 - 각 사용자 정의 함수의 주석
 - 사용자 함수 내부에서 Conditional & loop의 주석
-- Makefile로 컴파일일
+- Makefile로 컴파일
 
 ```c
 #include <stdio.h>
@@ -21,7 +21,7 @@
 
 /*--- struct ---*/
 
-/*---global ---*/
+/*--- global ---*/
 
 /*******************************************************************************
 * FUNCTION:    Insert
@@ -33,8 +33,8 @@ int Insert()
 }
 
 /*******************************************************************************
-* FUNCTION:    Read                           
-* DESCRIPTION: file.txt에서 console화면으로 읽어옵니다. 
+* FUNCTION:    Read
+* DESCRIPTION: file.txt에서 console화면으로 읽어옵니다.
 *******************************************************************************/
 int Read()
 {
@@ -42,7 +42,7 @@ int Read()
 }
 
 /*******************************************************************************
-* FUNCTION:    Search                           
+* FUNCTION:    Search
 * DESCRIPTION: Code를 입력해 검색하는 함수
 *******************************************************************************/
 int Search()
@@ -51,8 +51,8 @@ int Search()
 }
 
 /*******************************************************************************
-* FUNCTION:    main                           
-* DESCRIPTION: 
+* FUNCTION:    main
+* DESCRIPTION:
 *******************************************************************************/
 int main()
 {
@@ -61,7 +61,7 @@ int main()
 ```
 
 # Input
-- 10자리 code
+- 9자리 code
 - 40자리 name
 ## Input example
 
@@ -71,7 +71,7 @@ $ ./file
 
 How many storage : 4
 ------------------
-[1] Add
+[1] Insert
 [2] Read
 [3] Search
 [4] Exit
@@ -79,7 +79,7 @@ How many storage : 4
 Choose Menu : 1
 ------------------
 
-[ Add a new Code & Name ]
+[ Insert a new Code & Name ]
 
 Code(9)  : 1
 name(40) : a
@@ -96,7 +96,7 @@ name(40) : a
 ### Read
 ```bash
 ------------------
-[1] Add
+[1] Insert
 [2] Read
 [3] Search
 [4] Exit
@@ -116,7 +116,7 @@ Choose Menu : 2
 ### Search
 ```bash
 ------------------
-[1] Add
+[1] Insert
 [2] Read
 [3] Search
 [4] Exit
@@ -135,7 +135,7 @@ Search Code[9] : 2
 ### Exit
 ```bash
 ------------------
-[1] Add
+[1] Insert
 [2] Read
 [3] Search
 [4] Exit
