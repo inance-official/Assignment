@@ -1,9 +1,14 @@
 
 Assigment_1 File I/O - f series
+
 Assigment_2 Separate one program into individual programs
+
 Assigment_3 File I/O - f serise 2 universal I/O model
+
 Assigment_4 SHM - one main
+
 Assigment_5 file disk speed test
+
 Assigment_6 mini Program
 
 ## Table
@@ -154,7 +159,7 @@ for (init; condition; step) contents;
 ```c
 /******************************************************************************
 FUNCTION    : Customfunction
-DESCRIPTION : 
+DESCRIPTION :
 PARAMETERS  : int AAA - 설명
 			  int BBB - 설명
 			  int CCC - 설명
@@ -170,7 +175,7 @@ int Customfunction(int AAA, int BBB, int CCC, int DDD)
 ```c
 /******************************************************************************
 FUNCTION    : Customfunction
-DESCRIPTION : 
+DESCRIPTION :
 PARAMETERS  : int AAA - 설명
 			  int BBB - 설명
 			  int CCC - 설명
@@ -187,7 +192,7 @@ int Customfunction(int AAA, int BBB,
 ```c
 /******************************************************************************
 FUNCTION    : Customfunction
-DESCRIPTION : 
+DESCRIPTION :
 PARAMETERS  : int AAA - 설명
 			  int BBB - 설명
 			  int CCC - 설명
@@ -195,7 +200,7 @@ PARAMETERS  : int AAA - 설명
 RETURNED    : 1(SUCCESS)
 ******************************************************************************/
 int Customfunction(int AAA,
-				   int BBB,
+                   int BBB,
                    int CCC,
                    int DDD)
 {
@@ -213,9 +218,9 @@ int Customfunction(int AAA,
 - 기본적으로 BSD(Allman) style 적용
 ```c
 /******************************************************************************
-FILE NAME   : 
+FILE NAME   :
 DESCRIPTION : main
-DATA        : 
+DATA        :
 ******************************************************************************/
 #include <stdio.h>
 
@@ -268,7 +273,7 @@ int main()
 #define  _PORTO_H_
 
 #include <stdio.h>         // 참조할 헤더파일
- 
+
 /*--- PROTO TYPE ---*/
 #ifdef __cplusplus         // C++에서 C의 함수를 인식시키기 위한 매크로 시작
 extern "C"
