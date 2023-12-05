@@ -183,7 +183,7 @@ PARAMETERS  : int AAA - 설명
 RETURNED    : 1(SUCCESS)
 ******************************************************************************/
 int Customfunction(int AAA, int BBB,
-                   int CCC, int DDD)
+				   int CCC, int DDD)
 {
 
 }
@@ -200,9 +200,9 @@ PARAMETERS  : int AAA - 설명
 RETURNED    : 1(SUCCESS)
 ******************************************************************************/
 int Customfunction(int AAA,
-                   int BBB,
-                   int CCC,
-                   int DDD)
+				   int BBB,
+				   int CCC,
+				   int DDD)
 {
 
 }
@@ -226,16 +226,16 @@ DATA        :
 
 int main()
 {
-    if (true)
-    {
-        printf("Hello, World!\n");
-    }
-    else
-    {
-        printf("Goodbye, World!\n");
-    }
+	if (true)
+	{
+		printf("Hello, World!\n");
+	}
+	else
+	{
+		printf("Goodbye, World!\n");
+	}
 
-    return 0;
+	return 0;
 }
 ```
 
