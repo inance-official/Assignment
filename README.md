@@ -1,7 +1,7 @@
-Assigment_1 File I/O - f serise
-Assigment_2 하나의 프로그램을 개별 프로그램으로 분리
+Assigment_1 File I/O - f series
+Assigment_2 Separate one program into individual programs
 Assigment_3 File I/O - f serise 2 universal I/O model
-Assigment_4 SHM - 하나의 main
+Assigment_4 SHM - one main
 Assigment_5 file disk speed test
 Assigment_6 mini Program
 
