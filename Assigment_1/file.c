@@ -5,7 +5,7 @@
 #include <stdbool.h>
 
 #define codeSize 10
-#define nameSize 43
+#define nameSize 41
 
 typedef struct LIST
 {
