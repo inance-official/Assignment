@@ -1,10 +1,10 @@
 /******************************************************************************
- * PROGRAM NAME : delete
- * SOURCE NAME  : delete.c
- * DESCRIPTION  : 파일에서 데이터 삭제
- * DATE         :
- * AUTHOR       :
- ******************************************************************************/
+* PROGRAM NAME : delete
+* SOURCE NAME  : delete.c
+* DESCRIPTION  : 파일에서 데이터 삭제
+* DATE         :
+* AUTHOR       :
+******************************************************************************/
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -12,7 +12,7 @@
 
 #include "kntable.h"
 
-KEYNAME *g_KnList = NULL;
+KEYNAME   *g_KnList = NULL;
 
 /******************************************************************************
 FUNCTION    : Cmp
@@ -23,9 +23,9 @@ RETURNED    : strcmp()의 반환값
 ******************************************************************************/
 int Cmp(const void *aa, const void *bb)
 {
-	KEYNAME *k1 = (KEYNAME *)aa;
-	KEYNAME *k2 = (KEYNAME *)bb;
-	return strcmp(k1->key, k2->key);
+	KEYNAME *k1 = (KEYNAME*)aa;
+	KEYNAME *k2 = (KEYNAME*)bb;
+	return strcmp(k1 -> key, k2 -> key);
 }
 
 /******************************************************************************
@@ -36,11 +36,9 @@ RETURNED    : num - 파일 내 레코드 수
 ******************************************************************************/
 int FileCount()
 {
-	FILE *fp = NULL;
-	char sbuff[64] = {
-		0,
-	};
-	int num = 0;
+	FILE      *fp        = NULL;
+	char       sbuff[64] = {0,};
+	int        num       = 0;
 
 	fp = fopen("./file.txt", "r");
 
@@ -69,12 +67,10 @@ RETURNED    : 1(SUCCESS)
 ******************************************************************************/
 int FileToMem(KEYNAME *knlist, int num)
 {
-	KEYNAME *tkey = NULL;
-	FILE *fp = NULL;
-	char sbuff[64] = {
-		0,
-	};
-	int ii;
+	KEYNAME   *tkey         = NULL;
+	FILE      *fp           = NULL;
+	char       sbuff[64]    = {0,};
+	int        ii;
 
 	// 파일 읽기모드로 열기
 	fp = fopen("./file.txt", "r");
@@ -107,8 +103,8 @@ RETURNED    : 1(SUCCESS)
 ******************************************************************************/
 int SortSave(KEYNAME *knlist, int count)
 {
-	FILE *fp = NULL;
-	int ii;
+	FILE     *fp = NULL;
+	int       ii;
 
 	// 배열을 정렬
 	qsort(knlist, count, sizeof(KEYNAME), Cmp);
@@ -128,7 +124,7 @@ int SortSave(KEYNAME *knlist, int count)
 		fflush(fp);
 	}
 
-	printf("Save Complete\n");
+	printf("Save Complete                    \n");
 	printf("                                 \n");
 
 	fclose(fp);
@@ -146,12 +142,10 @@ RETURNED    : 1(SUCCESS)
 ******************************************************************************/
 int Delete(KEYNAME *knlist, int count, char *delkey)
 {
-	int chk = 0;	  // 입력 키 비교
-	int user = 0;	  // 사용자 입력
-	int matchcnt = 0; // 키 일치 수
-	char delname[NAMESIZE] = {
-		0,
-	}; // 삭제할 데이터의 이름
+	int chk                 = 0;      // 입력 키 비교
+	int user                = 0;      // 사용자 입력
+	int matchcnt            = 0;      // 키 일치 수
+	char delname[NAMESIZE] = {0,};    // 삭제할 데이터의 이름
 	int ii;
 
 	/*--- 키 일치 및 중복 ---*/
@@ -180,7 +174,7 @@ int Delete(KEYNAME *knlist, int count, char *delkey)
 		printf("Enter the name to delete: ");
 		scanf("%s", delname);
 		printf("                                 \n");
-		printf("Key : %s\tName : %s\n", delkey, delname);
+	   	printf("Key : %s\tName : %s\n", delkey, delname);
 		printf("                                 \n");
 
 		// 삭제 여부
@@ -195,9 +189,9 @@ int Delete(KEYNAME *knlist, int count, char *delkey)
 				if (strcmp(knlist[ii].key, delkey) == 0 &&
 					strcmp(knlist[ii].name, delname) == 0)
 				{
-					memmove(&knlist[ii], &knlist[ii + 1], sizeof(KEYNAME) * (count - ii - 1));
+					memmove(&knlist[ii], &knlist[ii+1], sizeof(KEYNAME) * (count - ii - 1));
 					count--;
-					printf("Delete Complete\n");
+					printf("Delete Complete                  \n");
 					printf("                                 \n");
 					break;
 				}
@@ -205,7 +199,7 @@ int Delete(KEYNAME *knlist, int count, char *delkey)
 		}
 		else if (user == 2) // 2:no 취소
 		{
-			printf("Delete canceled\n");
+			printf("Delete canceled                  \n");
 			printf("                                 \n");
 			return 1;
 		}
@@ -226,21 +220,23 @@ int Delete(KEYNAME *knlist, int count, char *delkey)
 
 				if (user == 1) // 1:yes 삭제
 				{
-					memmove(&knlist[ii], &knlist[ii + 1], sizeof(KEYNAME) * (count - ii));
+					memmove(&knlist[ii], &knlist[ii+1], sizeof(KEYNAME) * (count - ii));
 					count--;
-					printf("Delete Complete\n");
+					printf("Delete Complete                  \n");
+					printf("                                 \n");
 					break;
 				}
 				else if (user == 2) // 2:no 취소
 				{
-					printf("Delete canceled\n");
+					printf("Delete canceled                  \n");
+					printf("                                 \n");
 					return 1;
 				}
 			}
 		}
 	}
 
-	if (chk != 0)
+	if(chk != 0)
 	{
 		printf("Not Found. key[%s]\n", delkey);
 		printf("                                 \n");
@@ -261,12 +257,10 @@ RETURNED    : 0(SUCCESS)
 ******************************************************************************/
 int main()
 {
-	char delkey[KEYSIZE] = {
-		0,
-	};
-	int user = 0;
-	int rtn;
-	int count = 0;
+	char 	delkey[KEYSIZE]  = {0,};
+	int     user         	 = 0;
+	int		rtn;
+	int 	count			 = 0;
 
 	printf("                                 \n");
 	printf("---------------------------------\n");
@@ -281,7 +275,7 @@ int main()
 		/*--- 메모리 할당 ---*/
 		count = FileCount();
 
-		g_KnList = (KEYNAME *)malloc(sizeof(KEYNAME) * count);
+   		g_KnList = (KEYNAME *)malloc(sizeof(KEYNAME) * count);
 		memset(g_KnList, 0x00, sizeof(KEYNAME) * count);
 
 		/*--- 파일에서 데이터 로드 ---*/
@@ -304,11 +298,11 @@ int main()
 			printf("                                 \n");
 		}
 
-		printf("Do you search more? (1)yes (2)no : ");
+		printf("Do you delete more? (1)yes (2)no : ");
 		scanf("%d", &user);
 		printf("---------------------------------\n");
 		printf("                                 \n");
-		if (user == 2) // 2:no 종료
+		if (user == 2)	// 2:no 종료
 		{
 			break;
 			printf("Exit the Program                 \n");
@@ -321,3 +315,6 @@ int main()
 
 	return 0;
 }
+
+
+
