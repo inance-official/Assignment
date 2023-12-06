@@ -1,15 +1,23 @@
 
-Assigment_1 File I/O - f series
+- Assigment_1 File I/O - f series
+- Assigment_2 Separate one program into individual programs
+- Assigment_3 File I/O - f serise 2 universal I/O model
+- Assigment_4 SHM - one main
+- Assigment_5 file disk speed test
+- Assigment_6 mini Program
 
-Assigment_2 Separate one program into individual programs
+# Coding style (Rule)
 
-Assigment_3 File I/O - f serise 2 universal I/O model
+- Assigment를 해결하기 위해 지켜야 할 style
+- file부터 SHM까지 다루는 과제 Guide 
 
-Assigment_4 SHM - one main
+#### 일반 가이드라인
+- 코드는 명확성과 가독성을 강조하여 최대한 간단하게 작성
+- 주석은 이해를 돕기 위해 자세하게 작성
+- 디버깅은 `printf()` 
+	- 다른 함수와 구분되게 맨 앞 줄에 붙여서 사용
 
-Assigment_5 file disk speed test
-
-Assigment_6 mini Program
+이 코딩 스타일 규칙은 코드베이스를 이해하고 누구나 접근 하기 쉽도록 하기 위한 것이다. 중점은 간결성과 명확성에 있으며 코드와 함께 작업하는 모든 사람에게 이해를 촉진을 지향해야하고 자세한 주석을 제공해야한다.
 
 ## Table
 
@@ -19,10 +27,6 @@ Assigment_6 mini Program
 - [Custom function](#custom-function)
 - [Fomatting](#fomatting)
 - [Header File](#header-file)
-
-# Coding style (Rule)
-
-- Assigment를 해결하기 위해 지켜야 할 style
 
 ## Naming
 - 길이는 최대한 30자 이내로 정의
@@ -50,6 +54,9 @@ VARIABLE_IS_MEMORY
 ## Variable
 - 기본적으로 한 줄에 하나의 정의만 작성
 - 모든 전역변수(Global)변수는 초기화 값 필수
+    - 0x00 : NULL
+    - 0x20 : Space
+
 ```c
 char        g_Name     [128] = {0,};
 int         g_Len            = 0;
