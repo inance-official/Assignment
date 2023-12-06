@@ -26,8 +26,8 @@ int ReadFile()
 
 	char 	   rbuff[64]  = {0,};
 
-    char       tbuff[64]  = {0,};
-    time_t     now        = time(NULL);
+	char       tbuff[64]  = {0,};
+	time_t     now        = time(NULL);
 	struct tm *tt         = NULL;
 	KEYNAME   *knlist     = NULL;
 
@@ -54,8 +54,8 @@ int ReadFile()
 		knlist = (KEYNAME *)rbuff;
 
 		printf("%-*.*s%-*.*s\n",
-			sizeof(knlist->key)-1, sizeof(knlist->key)-1, knlist->key,
-			sizeof(knlist->name)-1, sizeof(knlist->name)-1, knlist->name);
+				sizeof(knlist->key)-1, sizeof(knlist->key)-1, knlist->key,
+				sizeof(knlist->name)-1, sizeof(knlist->name)-1, knlist->name);
 
 		if(feof(fp))
 			break;
@@ -75,11 +75,11 @@ RETURNED    : 0(SUCCESS)
 int main()
 {
 	while (1)
-    {
+	{
 		system("clear");
-        ReadFile();
-        sleep(2);
-    }
+		ReadFile();
+		sleep(2);
+	}
 
 	return 0;
 }

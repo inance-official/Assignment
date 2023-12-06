@@ -35,25 +35,25 @@ RETURNED    : num - 파일 내 레코드 수
 ******************************************************************************/
 int FileCount()
 {
-    FILE      *fp        = NULL;
-    char       rbuff[64] = {0,};
-    int        num       = 0;
+	FILE      *fp        = NULL;
+	char       rbuff[64] = {0,};
+	int        num       = 0;
 
-    fp = fopen("./file.txt", "r");
-    if (fp == NULL)
-    {
-        printf("file open error[%d]\n", errno);
-        return -1;
-    }
+	fp = fopen("./file.txt", "r");
+	if (fp == NULL)
+	{
+		printf("file open error[%d]\n", errno);
+		return -1;
+	}
 
-    while (fgets(rbuff, sizeof(rbuff), fp) != NULL)
-    {
-        num++;
-    }
+	while (fgets(rbuff, sizeof(rbuff), fp) != NULL)
+	{
+		num++;
+	}
 
-    fclose(fp);
+	fclose(fp);
 
-    return num;
+	return num;
 }
 
 /******************************************************************************
@@ -107,7 +107,7 @@ int insert()
 			free(knlist);
 	}
 
-    fclose(fp);
+	fclose(fp);
 
 	/*--- 전체 데이터 메모리 로드 및 정렬 ---*/
 	fp = fopen("./file.txt", "r");
@@ -122,18 +122,18 @@ int insert()
 	memset(knlist, 0x00, sizeof(KEYNAME) * count);
 
 	for (ii = 0; ii < count; ii++)
-    {
+	{
 		fgets(rbuff, sizeof(rbuff), fp);
 
 		tkey = (KEYNAME *)rbuff;
 
 		memcpy(&knlist[ii], tkey, sizeof(KEYNAME));
-    }
+	}
 
-    fclose(fp);
+	fclose(fp);
 
-    // 배열을 정렬
-    qsort(knlist, count, sizeof(KEYNAME), Cmp);
+	// 배열을 정렬
+	qsort(knlist, count, sizeof(KEYNAME), Cmp);
 
 	/*--- 전체 데이터 신규 저장 ---*/
 	fp = fopen("./file.txt", "w+");
@@ -143,12 +143,12 @@ int insert()
 		return -1;
 	}
 
-    for (ii = 0; ii < count; ii++)
+	for (ii = 0; ii < count; ii++)
 	{
 		fwrite(&knlist[ii], 1, sizeof(KEYNAME), fp);
 		fwrite("\n", 1, 1, fp);
-        fflush(fp);
-    }
+		fflush(fp);
+	}
 
 	free(knlist);
 
