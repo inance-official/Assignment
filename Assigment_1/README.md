@@ -3,19 +3,18 @@
 - [Input & Output example](#input--output-example)
 
 # Question
-9자리 code와 40자리 name을 파일에 쓰고 읽어오고 code를 기준으로 검색 가능한 프로그램 만들기
+이 프로젝트는 9자리의 코드와 40자리의 이름을 파일에 쓰고 읽어오며, 코드를 기준으로 검색할 수 있는 프로그램을 개발하는 것
 
-- file.c
-- file.txt
-- 메모리 → 파일
-	- 파일에 쓰기 전에 몇 개의 레코드를 받을지 입력
-	- file.txt에는 입력한 데이터만 존재
-	- 프로그램을 다시 실행시켜 Insert하면 file.txt 초기
-- 쓰기 / 읽기 / 검색
-- `fopen()` / `fclose()`
-- 각 사용자 정의 함수의 주석
-- 사용자 함수 내부에서 Conditional & loop의 주석
-- Makefile로 컴파일
+프로그램은 다음과 같은 기능을 수행:
+
+- 메모리 → 파일: 사용자로부터 입력받은 레코드의 개수를 기반으로 데이터를 파일에 쓰는 기능으로 file.txt에는 입력한 데이터만 존재해야 한다. 프로그램을 다시 실행하여 데이터를 삽입하면 file.txt는 초기화.
+
+- 쓰기 / 읽기 / 검색: 파일에 데이터를 쓰고, 읽어오며, 코드를 기준으로 데이터를 검색하는 기능.
+
+이 프로젝트는 `fopen()`과 `fclose()` 함수를 사용하여 파일을 열고 닫는 작업을 수행한다. 또한, 각 사용자 정의 함수와 조건문 및 루프 내부에는 적절한 주석을 포함해야 한다.
+마지막으로, Makefile을 사용하여 프로그램을 컴파일해야 한다.
+
+# Formatting
 
 ```c
 #include <stdio.h>
@@ -66,9 +65,8 @@ int main()
 # Input & Output example
 - 9자리 code
 - 40자리 name
-## Input example
 
-### Insert
+## Insert
 ```bash
 $ ./file
 
@@ -88,15 +86,15 @@ Code(9)  : 1
 name(40) : a
 
 ```
-
-### file.txt
+## file.txt
 ```txt
 1           a
 2           b
 3           c
 4           d
 ```
-### Read
+
+## Read
 ```bash
 ------------------
 [1] Insert
@@ -116,7 +114,7 @@ Choose Menu : 2
 4        	d
 ```
 
-### Search
+## Search
 ```bash
 ------------------
 [1] Insert
@@ -135,7 +133,7 @@ Search Code[9] : 2
 2        	b
 ```
 
-### Exit
+## Exit
 ```bash
 ------------------
 [1] Insert
