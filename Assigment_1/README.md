@@ -1,4 +1,7 @@
-#file
+- [Question](#question)
+- [Formatting](#formatting)
+- [Input & Output example](#input--output-example)
+
 # Question
 9자리 code와 40자리 name을 파일에 쓰고 읽어오고 code를 기준으로 검색 가능한 프로그램 만들기
 
@@ -60,7 +63,7 @@ int main()
 }
 ```
 
-# Input
+# Input & Output example
 - 9자리 code
 - 40자리 name
 ## Input example
