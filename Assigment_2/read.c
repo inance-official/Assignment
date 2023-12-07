@@ -12,7 +12,7 @@
 #include <unistd.h>
 #include <time.h>
 
-#include "kntable.h"
+#include "cntable.h"
 
 /******************************************************************************
 FUNCTION    : ReadFile
@@ -29,7 +29,7 @@ int ReadFile()
     char       tbuff[64]  = {0,};
     time_t     now        = time(NULL);
     struct tm *tt         = NULL;
-    KEYNAME   *knlist     = NULL;
+    CODENAME  *cnlist     = NULL;
 
 
     fp = fopen("file.txt", "r");
@@ -43,19 +43,19 @@ int ReadFile()
     tt = localtime(&now);
 
     strftime(tbuff, sizeof(tbuff), "%Y-%m-%d %H:%M:%S", tt);
-    printf("Update key(2sec)\n");
+    printf("Update code(2sec)\n");
     printf("Date : %s\n", tbuff);
 
     printf("\n");
-    printf("%-9s%-50s\n","[Key]", "[Name]");
+    printf("%-9s%-50s\n","[Code]", "[Name]");
 
     while (fgets(rbuff, sizeof(rbuff), fp))
     {
-        knlist = (KEYNAME *)rbuff;
+        cnlist = (CODENAME *)rbuff;
 
         printf("%-*.*s%-*.*s\n",
-                sizeof(knlist->key)-1, sizeof(knlist->key)-1, knlist->key,
-                sizeof(knlist->name)-1, sizeof(knlist->name)-1, knlist->name);
+                sizeof(cnlist->code)-1, sizeof(cnlist->code)-1, cnlist->code,
+                sizeof(cnlist->name)-1, sizeof(cnlist->name)-1, cnlist->name);
 
         if(feof(fp))
             break;

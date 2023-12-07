@@ -7,8 +7,9 @@
 
 - insert.c
 	- `qsort()`를 사용하여 데이터를 삽입하고, 'q'를 입력하면 프로그램이 종료
+	- code에 대한 중복 값 허용
 - read.c
-	- `system()`을 사용하여 화면을 지우고, `sleep()`을 사용하여 2초마다 화면을 갱신. 현재 날짜와 시간도 출력
+	- `system()`을 사용하여 화면을 지우고, `sleep()`을 사용하여 2초마다 화면을 갱신. 현재 날짜와 시간도 출용용
 - search.c
 	- `bsearch()`를 사용하여 키를 검색하고, 중복된 키가 있으면 모두 출력. 검색이 끝나면 추가 검색 여부를 확인하고, 검색이 실패하면 다시 검색 여부를 확인
 - delete.c
@@ -63,7 +64,7 @@ int main()
 /******************************************************************************
 * PROGRAM NAME : insert
 * SOURCE NAME  : insert.c
-* DESCRIPTION  : key, name 파일 저장
+* DESCRIPTION  : code, name 파일 저장
 * DATE         :
 * AUTHOR       :
 ******************************************************************************/
@@ -119,7 +120,7 @@ int main()
 /******************************************************************************
 * PROGRAM NAME : search
 * SOURCE NAME  : search.c
-* DESCRIPTION  : key, name 파일 검색
+* DESCRIPTION  : code, name 파일 검색
 * DATE         :
 * AUTHOR       :
 ******************************************************************************/
@@ -237,7 +238,6 @@ int SortSave()
 }
 
 /******************************************************************************
-
 FUNCTION    : Delete
 DESCRIPTION : 키를 입력받아 해당 키를 가진 데이터 삭제
 PARAMETERS  :
@@ -260,25 +260,25 @@ int main()
 }
 ```
 
-## kntable.c
+## cntable.c
 ```c
 /******************************************************************************
-* SOURCE NAME  : kntable.h
+* SOURCE NAME  : cntable.h
 * DESCRIPTION  : 헤더파일
 * DATE         :
 * AUTHOR       :
 ******************************************************************************/
 
 /*--- define ---*/
-#define KEYSIZE 9
+#define CODESIZE 9
 #define NAMESIZE 40
 
 /*--- struct ---*/
-typedef struct _KEYNAME
+typedef struct _CODENAME
 {
-	char key[KEYSIZE + 1];
+	char code[CODESIZE + 1];
 	char name[NAMESIZE + 1];
-} KEYNAME;
+} CODENAME;
 
 ```
 
@@ -288,25 +288,25 @@ typedef struct _KEYNAME
 ```bash
 $ ./insert
 
-Insert Key & Name
-If you want to quit input key [q]
+Insert code & Name
+If you want to quit input code [q]
 
-Input key[9]   : 1
+Input code[9]   : 1
 Input name[40] : a
 
-Input key[9]   : 1
+Input code[9]   : 1
 Input name[40] : aa
 
-Input key[9]   : 2
+Input code[9]   : 2
 Input name[40] : b
 
-Input key[9]   : 3
+Input code[9]   : 3
 Input name[40] : c
 
-Input key[9]   : 4
+Input code[9]   : 4
 Input name[40] : d
 
-Input key[9] : q
+Input code[9] : q
 
 Exit the Program
 ```
@@ -318,10 +318,10 @@ $./read
 ```
 
 ```bash
-Update key(2sec)
+Update code(2sec)
 Date : 2023-12-06 12:44:28
 
-[Key]    [Name]
+[CODE]    [Name]
 1        a
 1        aa
 2        b
@@ -335,31 +335,31 @@ $ ./search
 
 ---------------------------------
 
-    Enter a key to find name
+    Enter a code to find name
 
 ---------------------------------
 
-Input key(9) : 1
+Input code(9) : 1
 
 ---------------------------------
-key : 1         Name : a
-key : 1         Name : aa
----------------------------------
-
-Do you search more? (1)yes (2)no : 1
-
-Input key(9) : 2
-
----------------------------------
-key : 2         Name : b
+CODE : 1         Name : a
+CODE : 1         Name : aa
 ---------------------------------
 
 Do you search more? (1)yes (2)no : 1
 
-Input key(9) : 12
+Input code(9) : 2
 
 ---------------------------------
-Not Found. key[12]
+CODE : 2         Name : b
+---------------------------------
+
+Do you search more? (1)yes (2)no : 1
+
+Input code(9) : 12
+
+---------------------------------
+Not Found. code[12]
 Search failed. Please try again.
 ---------------------------------
 
@@ -373,20 +373,20 @@ $ ./delete
 
 ---------------------------------
 
-  Enter a key to Delete recode
+  Enter a code to Delete recode
 
 ---------------------------------
 
-Input key(9) : 1
+Input code(9) : 1
 
 ---------------------------------
-Key : 1	Name : a
-Key : 1	Name : aa
+CODE : 1	Name : a
+CODE : 1	Name : aa
 ---------------------------------
 
 Enter the name to delete: a
 
-Key : 1	Name : a
+CODE : 1	Name : a
 
 Are you sure? (1)yes (2)no : 1
 
@@ -394,12 +394,12 @@ Delete Complete
 
 Save Complete
 
-Do you search more? (1)yes (2)no : 1
+Do you delete more? (1)yes (2)no : 1
 ---------------------------------
 
-Input key(9) : 2
+Input code(9) : 2
 
-Key : 2	Name : b
+CODE : 2	Name : b
 
 Are you sure? (1)yes (2)no : 1
 
@@ -407,7 +407,7 @@ Delete Complete
 
 Save Complete
 
-Do you search more? (1)yes (2)no : 2
+Do you delete more? (1)yes (2)no : 2
 ---------------------------------
 
 ```

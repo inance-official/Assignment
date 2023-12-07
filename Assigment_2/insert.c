@@ -1,7 +1,7 @@
 /******************************************************************************
 * PROGRAM NAME : insert
 * SOURCE NAME  : insert.c
-* DESCRIPTION  : key, name 파일 저장
+* DESCRIPTION  : code, name 파일 저장
 * DATE         :
 * AUTHOR       :
 ******************************************************************************/
@@ -10,7 +10,7 @@
 #include <string.h>
 #include <errno.h>
 
-#include "kntable.h"
+#include "cntable.h"
 
 /******************************************************************************
 FUNCTION    : Cmp
@@ -21,10 +21,10 @@ RETURNED    : strcmp()의 반환값
 ******************************************************************************/
 int Cmp(const void *aa, const void *bb)
 {
-    KEYNAME *k1 = (KEYNAME *)aa;
-    KEYNAME *k2 = (KEYNAME *)bb;
+    CODENAME *k1 = (CODENAME *)aa;
+    CODENAME *k2 = (CODENAME *)bb;
 
-    return strcmp(k1->key, k2->key);
+    return strcmp(k1->code, k2->code);
 }
 
 /******************************************************************************
@@ -59,7 +59,7 @@ int FileCount()
 /******************************************************************************
 FUNCTION    : FileToMem
 DESCRIPTION : 파일에서 메모리로 데이터 로드
-PARAMETERS  : KEYNAME *knlist - 로드한 데이터를 저장할 메모리
+PARAMETERS  : CODENAME *cnlist - 로드한 데이터를 저장할 메모리
               int num         - 파일 내 레코드 수
 RETURNED    : 1(SUCCESS)
 ******************************************************************************/
@@ -67,7 +67,7 @@ int insert()
 {
     FILE      *fp        = NULL;
 
-    KEYNAME   *knlist    = NULL, *tkey = NULL;
+    CODENAME   *cnlist    = NULL, *tcode = NULL;
     int        rcnt      = 0;
     int        ii        = 0;
     char       rbuff[64] = { 0, };
@@ -84,27 +84,27 @@ int insert()
     for (ii = 0; ii < rcnt + 1; ii++)
     {
         rcnt++;
-        knlist = (KEYNAME *)malloc(sizeof(KEYNAME) * rcnt);
-        memset(knlist, 0x00, sizeof(KEYNAME) * rcnt);
+        cnlist = (CODENAME *)malloc(sizeof(CODENAME) * rcnt);
+        memset(cnlist, 0x00, sizeof(CODENAME) * rcnt);
 
         printf("\n");
 
-        printf("Input key[9] : ");
-        scanf("%s", knlist[ii].key);
+        printf("Input code[9] : ");
+        scanf("%s", cnlist[ii].code);
 
-        if (strcmp(knlist[ii].key, "q") == 0)
+        if (strcmp(cnlist[ii].code, "q") == 0)
             break;
 
         printf("Input name[40] : ");
-        scanf("%s", knlist[ii].name);
+        scanf("%s", cnlist[ii].name);
 
-        fwrite(&knlist[ii], 1, sizeof(KEYNAME), fp);
+        fwrite(&cnlist[ii], 1, sizeof(CODENAME), fp);
         fwrite("\n", 1, 1, fp);
 
         fflush(fp);
 
-        if (knlist != NULL)
-            free(knlist);
+        if (cnlist != NULL)
+            free(cnlist);
     }
 
     fclose(fp);
@@ -118,22 +118,22 @@ int insert()
     }
 
     count = FileCount();
-    knlist = (KEYNAME *)malloc(sizeof(KEYNAME) * count);
-    memset(knlist, 0x00, sizeof(KEYNAME) * count);
+    cnlist = (CODENAME *)malloc(sizeof(CODENAME) * count);
+    memset(cnlist, 0x00, sizeof(CODENAME) * count);
 
     for (ii = 0; ii < count; ii++)
     {
         fgets(rbuff, sizeof(rbuff), fp);
 
-        tkey = (KEYNAME *)rbuff;
+        tcode = (CODENAME *)rbuff;
 
-        memcpy(&knlist[ii], tkey, sizeof(KEYNAME));
+        memcpy(&cnlist[ii], tcode, sizeof(CODENAME));
     }
 
     fclose(fp);
 
     // 배열을 정렬
-    qsort(knlist, count, sizeof(KEYNAME), Cmp);
+    qsort(cnlist, count, sizeof(CODENAME), Cmp);
 
     /*--- 전체 데이터 신규 저장 ---*/
     fp = fopen("./file.txt", "w+");
@@ -145,12 +145,12 @@ int insert()
 
     for (ii = 0; ii < count; ii++)
     {
-        fwrite(&knlist[ii], 1, sizeof(KEYNAME), fp);
+        fwrite(&cnlist[ii], 1, sizeof(CODENAME), fp);
         fwrite("\n", 1, 1, fp);
         fflush(fp);
     }
 
-    free(knlist);
+    free(cnlist);
 
     fclose(fp);
 
@@ -168,9 +168,9 @@ int main()
     printf("                                 \n");
     printf("---------------------------------\n");
     printf("                                 \n");
-    printf("        Insert Key & Name        \n");
+    printf("       Insert Code & Name        \n");
     printf("                                 \n");
-    printf("If you want to quit input key [q]\n");
+    printf("If you want to quit input code [q]\n");
     printf("---------------------------------\n");
     printf("                                 \n");
 

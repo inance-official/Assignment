@@ -1,20 +1,20 @@
 /******************************************************************************
-* SOURCE NAME  : kntable.h
+* SOURCE NAME  : cntable.h
 * DESCRIPTION  : 헤더파일
 * DATE         :
 * AUTHOR       :
 ******************************************************************************/
 
 /*--- define ---*/
-#define KEYSIZE 9
+#define CODESIZE 9
 #define NAMESIZE 40
 
 /*--- struct ---*/
 typedef struct tm NOWTIME;
 
-typedef struct _KEYNAME
+typedef struct _CODENAME
 {
-    char key[KEYSIZE + 1];
+    char code[CODESIZE + 1];
     char name[NAMESIZE + 1];
-} KEYNAME;
+} CODENAME;
 
