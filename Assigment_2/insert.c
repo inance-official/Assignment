@@ -57,13 +57,12 @@ int FileCount()
 }
 
 /******************************************************************************
-FUNCTION    : FileToMem
-DESCRIPTION : 파일에서 메모리로 데이터 로드
-PARAMETERS  : CODENAME *cnlist - 로드한 데이터를 저장할 메모리
-              int num         - 파일 내 레코드 수
+FUNCTION    : Insert
+DESCRIPTION : 파일에 데이터 저장
+PARAMETERS  :
 RETURNED    : 1(SUCCESS)
 ******************************************************************************/
-int insert()
+int Insert()
 {
     FILE      *fp        = NULL;
 
@@ -108,6 +107,25 @@ int insert()
     }
 
     fclose(fp);
+
+    return 1;
+}
+
+/******************************************************************************
+FUNCTION    : SortSave
+DESCRIPTION : 정렬 및 저장
+PARAMETERS  :
+RETURNED    : 1(SUCCESS)
+******************************************************************************/
+int SortSave()
+{
+    FILE     *fp = NULL;
+
+    CODENAME   *cnlist    = NULL, *tcode = NULL;
+    int        rcnt      = 0;
+    int        ii        = 0;
+    char       rbuff[64] = { 0, };
+    int        count     = 0;
 
     /*--- 전체 데이터 메모리 로드 및 정렬 ---*/
     fp = fopen("./file.txt", "r");
@@ -165,6 +183,8 @@ RETURNED    : 0(SUCCESS)
 ******************************************************************************/
 int main()
 {
+    int rtn;
+
     printf("                                 \n");
     printf("---------------------------------\n");
     printf("                                 \n");
@@ -174,7 +194,19 @@ int main()
     printf("---------------------------------\n");
     printf("                                 \n");
 
-    insert();
+    rtn = Insert();
+    if (rtn < 0)
+    {
+        printf("Insert error[%d]\n", rtn);
+        return -1;
+    }
+
+    rtn = SortSave();
+    if (rtn < 0)
+    {
+        printf("SortSave error[%d]\n", rtn);
+        return -1;
+    }
 
     printf("                                 \n");
     printf("Exit the Program.                \n");
