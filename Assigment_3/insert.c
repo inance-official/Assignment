@@ -102,6 +102,35 @@ int FileToMem(KEYNAME *knlist, int num)
 }
 
 /******************************************************************************
+FUNCTION    : InputKeyName
+DESCRIPTION : 키 및 이름 입름
+PARAMETERS  : KEYNAME *knlist - 입력받은 데이터를 저장할 메모리
+RETURNED    : 1(SUCCESS)
+******************************************************************************/
+int InputKeyName(KEYNAME *knlist)
+{
+	char temp[128];
+
+	/*--- key 입력 ---*/
+	printf("Input Key[9] : ");
+	scanf("%s", temp);
+	memcpy(knlist->key, temp, strlen(temp));
+
+	/*--- q 입력시 프로그램 종료 ---*/
+	if(strcmp(knlist->key, "q") == 0)
+	{
+		return -1;
+	}
+
+	/*--- Name 입력 ---*/
+	printf("Input Name[40] : ");
+	scanf("%s", temp);
+	memcpy(knlist->name, temp, strlen(temp));
+
+	return 1;
+}
+
+/******************************************************************************
 FUNCTION    : DoubleChk
 DESCRIPTION : 키 중복 체키
 PARAMETERS  : int fd        - 파일 디스크립터
@@ -172,31 +201,24 @@ int Insert()
 		memset(knlist, 0x00, sizeof(KEYNAME));
 
 		/*--- key 입력 ---*/
-        printf("\n");
-		printf("Input Key[9] : ");
-		scanf("%s", temp);
-		memcpy(knlist->key, temp, strlen(temp));
-
-		/*--- q 입력시 프로그램 종료 ---*/
-		if(strcmp(knlist->key, "q") == 0)
+		rtn = InputKeyName(knlist);
+		if (rtn < 0)
 		{
-			if(knlist != NULL)
-				free(knlist);
+		    if(knlist != NULL)
+		    	free(knlist);
 
-			break;
+			printf("InputKeyName() error!! [%d]\n", errno);
+			return -1;
 		}
 
-		/*--- Name 입력 ---*/
-		printf("Input Name[40] : ");
-		scanf("%s", temp);
-		memcpy(knlist->name, temp, strlen(temp));
-
-	    /*--- 중복 체크 ---*/
-	    rtn = DoubleChk(fd, knlist->key);
-	    if (rtn < 0)
-	    {
-	    	printf("DoubleChk() error!! [%d]\n", errno);
-	    }
+		/*--- 중복 체크 ---*/
+		rtn = DoubleChk(fd, knlist->key);
+		if (rtn < 0)
+		{
+			printf("DoubleChk() error!! [%d]\n", errno);
+			InputKeyName(knlist);
+			rtn = DoubleChk(fd, knlist->key);
+		}
 
 		/*--- 파일에 쓰기 ---*/
 		write(fd, knlist, sizeof(KEYNAME));
@@ -300,17 +322,11 @@ int main()
     printf("---------------------------------\n");
     printf("                                 \n");
 
+	/*--- 파일에 데이터 저장 ---*/
     rtn = Insert();
-	if (rtn < 0)
-	{
-		printf("Insert() error!! [%d]\n", errno);
-	}
 
+	/*--- 파일에 데이터 정렬 및 저장 ---*/
 	SortSave();
-	if (rtn < 0)
-	{
-		printf("Insert() error!! [%d]\n", errno);
-	}
 
     printf("                                 \n");
     printf("Exit the Program.                \n");

@@ -18,7 +18,6 @@
 
 #define BUFFER_SIZE 9999
 
-
 int ReadFile()
 {
     int         fd, rlen;
