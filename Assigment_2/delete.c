@@ -95,44 +95,6 @@ int FileToMem(CODENAME *cnlist, int num)
 }
 
 /******************************************************************************
-FUNCTION    : SortSave
-DESCRIPTION : 정렬 및 저장
-PARAMETERS  : CODENAME *cnlist - 정렬할 데이터가 저장된 메모리
-              int count       - 메모리 내 데이터 수
-RETURNED    : 1(SUCCESS)
-******************************************************************************/
-int SortSave(CODENAME *cnlist, int count)
-{
-    FILE     *fp = NULL;
-    int       ii;
-
-    // 배열을 정렬
-    qsort(cnlist, count, sizeof(CODENAME), Cmp);
-
-    /*--- 전체 데이터 신규 저장 --*/
-    fp = fopen("./file.txt", "w+");
-    if (fp == NULL)
-    {
-        printf("file open error[%d]\n", errno);
-        return -1;
-    }
-
-    for (ii = 0; ii < count; ii++)
-    {
-        fwrite(&cnlist[ii], 1, sizeof(CODENAME), fp);
-        fwrite("\n", 1, 1, fp);
-        fflush(fp);
-    }
-
-    printf("Save Complete                    \n");
-    printf("                                 \n");
-
-    fclose(fp);
-
-    return 1;
-}
-
-/******************************************************************************
 FUNCTION    : Delete
 DESCRIPTION : 키를 입력받아 해당 키를 가진 데이터 삭제
 PARAMETERS  : CODENAME *cnlist - 삭제할 데이터가 저장된 메모리
@@ -174,7 +136,7 @@ int Delete(CODENAME *cnlist, int count, char *delcode)
         printf("Enter the name to delete: ");
         scanf("%s", delname);
         printf("                                 \n");
-           printf("Code : %s\tName : %s\n", delcode, delname);
+        printf("Code : %s\tName : %s\n", delcode, delname);
         printf("                                 \n");
 
         // 삭제 여부
@@ -243,9 +205,27 @@ int Delete(CODENAME *cnlist, int count, char *delcode)
         return -1;
     }
 
-    // 정렬 및 저장
-    SortSave(cnlist, count);
+    /*--- 전체 데이터 신규 저장 --*/
+    fp = fopen("./file.txt", "w+");
+    if (fp == NULL)
+    {
+        printf("file open error[%d]\n", errno);
+        return -1;
+    }
 
+    for (ii = 0; ii < count; ii++)
+    {
+        fwrite(&cnlist[ii], 1, sizeof(CODENAME), fp);
+        fwrite("\n", 1, 1, fp);
+        fflush(fp);
+    }
+
+    printf("Save Complete                    \n");
+    printf("                                 \n");
+
+    fclose(fp);
+
+    return 1;
     return 1;
 }
 
@@ -275,13 +255,14 @@ int main()
         /*--- 메모리 할당 ---*/
         count = FileCount();
 
-           g_CnList = (CODENAME *)malloc(sizeof(CODENAME) * count);
+        g_CnList = (CODENAME *)malloc(sizeof(CODENAME) * count);
         memset(g_CnList, 0x00, sizeof(CODENAME) * count);
 
         /*--- 파일에서 데이터 로드 ---*/
         rtn = FileToMem(g_CnList, count);
         if (rtn < 0)
         {
+            printf("file open error[%d]\n", errno)
             return -1;
         }
 
