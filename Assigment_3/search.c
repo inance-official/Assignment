@@ -27,7 +27,7 @@ PARAMETERS  : const void *aa - 비교할 데이터
               const void *bb - 비교할 데이터
 RETURNED    : strcmp()의 반환값
 ******************************************************************************/
-int cmp(const void *aa, const void *bb)
+int Cmp(const void *aa, const void *bb)
 {
     KEYNAME *k1 = (KEYNAME *)aa;
     KEYNAME *k2 = (KEYNAME *)bb;
@@ -116,7 +116,7 @@ int Search(KEYNAME *knlist, int num, char *key)
 
     strcpy(keyname.key, key);
 
-    result = (KEYNAME *)bsearch(&keyname, knlist, num, sizeof(KEYNAME), cmp);
+    result = (KEYNAME *)bsearch(&keyname, knlist, num, sizeof(KEYNAME), Cmp);
     if (result == NULL)
     {
         printf("\n");

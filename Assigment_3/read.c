@@ -18,12 +18,7 @@
 
 #define BUFFER_SIZE 9999
 
-/******************************************************************************
-FUNCTION    : ReadFile
-DESCRIPTION : txt 파일 읽어오기
-PARAMETERS  :
-RETURNED    : 1(SUCCESS)
-******************************************************************************/
+
 int ReadFile()
 {
     int         fd, rlen;
@@ -69,31 +64,20 @@ int ReadFile()
 
     return 1;
 }
+
 /******************************************************************************
 FUNCTION    : main
-DESCRIPTION : 메인 함수
+DESCRIPTION : 메인함수
 PARAMETERS  :
 RETURNED    : 0(SUCCESS)
-***********************************************************:w
-*******************/
-int main()
+******************************************************************************/
+ int main()
 {
     while (1)
     {
         system("clear");
         ReadFile();
         sleep(2);
-    }
-
-    return 0;
-}
-int main()
-{
-    while (1)
-    {
-        system("clear");
-        ReadFile();
-        sleep(2); /
     }
 
     return 0;

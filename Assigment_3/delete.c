@@ -27,7 +27,7 @@ PARAMETERS  : const void *aa - 비교할 데이터
               const void *bb - 비교할 데이터
 RETURNED    : strcmp()의 반환값
 ******************************************************************************/
-int cmp(const void *aa, const void *bb)
+int Cmp(const void *aa, const void *bb)
 {
     KEYNAME *k1 = (KEYNAME *)aa;
     KEYNAME *k2 = (KEYNAME *)bb;
@@ -67,9 +67,10 @@ int FileCount()
 }
 
 /******************************************************************************
-FUNCTION    : FileCount
-DESCRIPTION : 파일 내 레코드 수 반환
-PARAMETERS  :
+FUNCTION    : FileToMem
+DESCRIPTION : 파일 내용을 메모리로 로드
+PARAMETERS  : KEYNAME *knlist - 로드한 데이터를 저장할 메모리
+              int num         - 파일 내 레코드 수
 RETURNED    : num - 파일 내 레코드 수
 ******************************************************************************/
 int FileToMem(KEYNAME *knlist, int num)
@@ -79,6 +80,7 @@ int FileToMem(KEYNAME *knlist, int num)
     char             rbuff[BUFFER_SIZE]    = {0,};
     int              ii;
 
+    /*--- 파일 읽기모드로 열기 ---*/
     fd = open("./file.txt", O_RDONLY);
     if (fd < 0)
     {
@@ -86,6 +88,7 @@ int FileToMem(KEYNAME *knlist, int num)
         return -1;
     }
 
+    /*--- 파일에서 데이터 읽어오기 ---*/
     for (ii = 0; ii < num; ii++)
     {
         rlen = read(fd, rbuff, sizeof(KEYNAME));
@@ -111,15 +114,15 @@ RETURNED    : 1(SUCCESS)
 int Delete(KEYNAME *knlist, int count, char *delkey)
 {
     int          fd;
-    int          kcmp   = 0;
+    int          kCmp   = 0;
     int          ii, jj;
 
 
     for (ii = 0; ii < count; ii++)
     {
-    	kcmp = strcmp(knlist[ii].key, delkey);
+    	kCmp = strcmp(knlist[ii].key, delkey);
 
-        if (kcmp == 0)
+        if (kCmp == 0)
         {
             printf("\n");
             printf("Key : %s\tName : %s\n", knlist[ii].key, knlist[ii].name);
@@ -130,7 +133,7 @@ int Delete(KEYNAME *knlist, int count, char *delkey)
             printf("\n");
 
 			//배열을 정렬
-			qsort(knlist, count, sizeof(KEYNAME), cmp);
+			qsort(knlist, count, sizeof(KEYNAME), Cmp);
 
             /*--- 전체 데이터 신규 저장 --*/
 		    fd = open("./file.txt", O_WRONLY | O_TRUNC);
@@ -151,7 +154,7 @@ int Delete(KEYNAME *knlist, int count, char *delkey)
 		}
 	}
 
-    if(kcmp != 0)
+    if(kCmp != 0)
     {
         printf("Not Found\n");
     }

@@ -1,11 +1,19 @@
-typedef struct tm NOWTIME;
-
-#define KEYSIZE 10 
+/******************************************************************************
+* SOURCE NAME  : kntable.h
+* DESCRIPTION  : 헤더파일
+* DATE         :
+* AUTHOR       :
+******************************************************************************/
+/*--- define ---*/
+#define KEYSIZE 9
 #define NAMESIZE 40
 
-typedef struct KEYNAME
+/*--- struct ---*/
+typedef struct tm NOWTIME;
+
+typedef struct _KEYNAME
 {
-    char key[KEYSIZE];
-    char name[NAMESIZE];
-}   KEYNAME;
+    char key[KEYSIZE + 1];
+    char name[NAMESIZE + 1];
+} KEYNAME;
 
