@@ -111,21 +111,30 @@ int InputKeyName(KEYNAME *knlist)
 {
 	char temp[128];
 
-	/*--- key 입력 ---*/
-	printf("Input Key[9] : ");
-	scanf("%s", temp);
-	memcpy(knlist->key, temp, strlen(temp));
+    /*--- key 입력 ---*/
+    printf("Input Key[9] : ");
+    scanf("%s", temp);
+    memcpy(knlist->key, temp, strlen(temp));
 
 	/*--- q 입력시 프로그램 종료 ---*/
 	if(strcmp(knlist->key, "q") == 0)
 	{
-		return -1;
+	    if (knlist != NULL)
+	        free(knlist);
+
+        printf("                                  \n");
+        printf("Exit the Program.                 \n");
+        printf("                                  \n");
+	    exit(0); // 프로그램 종료
 	}
 
 	/*--- Name 입력 ---*/
 	printf("Input Name[40] : ");
 	scanf("%s", temp);
 	memcpy(knlist->name, temp, strlen(temp));
+    printf("                                 \n");
+    printf("---------------------------------\n");
+    printf("                                 \n");
 
 	return 1;
 }
@@ -154,11 +163,16 @@ int DoubleChk(int fd, char *inputkey)
 	{
 		if (strcmp(knlist[ii].key, inputkey) == 0)
 		{
-			printf("중복된 키가 있습니다.\n");
+            printf("                                 \n");
+			printf("A duplicate key exists.          \n");
+            printf("                                 \n");
 			printf("%-9s%-50s\n","[Key]", "[Name]");
 			printf(" %-*.*s%-*.*s\n",
 				sizeof(knlist[ii].key)-1, sizeof(knlist[ii].key)-1, knlist[ii].key,
 				sizeof(knlist[ii].name)-1, sizeof(knlist[ii].name)-1, knlist[ii].name);
+            printf("                                 \n");
+            printf("---------------------------------\n");
+            printf("                                 \n");
 			free(knlist);
 			return -1; // 중복된 키가 있음을 나타내는 오류 코드 반환
 		}
@@ -200,25 +214,16 @@ int Insert()
 		knlist = (KEYNAME *)malloc(sizeof(KEYNAME));
 		memset(knlist, 0x00, sizeof(KEYNAME));
 
-		/*--- key 입력 ---*/
-		rtn = InputKeyName(knlist);
-		if (rtn < 0)
-		{
-		    if(knlist != NULL)
-		    	free(knlist);
-
-			printf("InputKeyName() error!! [%d]\n", errno);
-			return -1;
-		}
+		InputKeyName(knlist);
 
 		/*--- 중복 체크 ---*/
 		rtn = DoubleChk(fd, knlist->key);
-		if (rtn < 0)
+		while (rtn < 0)
 		{
-			printf("DoubleChk() error!! [%d]\n", errno);
 			InputKeyName(knlist);
 			rtn = DoubleChk(fd, knlist->key);
 		}
+        printf("                                 \n");
 
 		/*--- 파일에 쓰기 ---*/
 		write(fd, knlist, sizeof(KEYNAME));
@@ -313,24 +318,26 @@ int main()
 {
 	int rtn;
 
-    printf("                                 \n");
-    printf("---------------------------------\n");
-    printf("                                 \n");
-    printf("       Insert Code & Name        \n");
-    printf("                                 \n");
+    printf("                                  \n");
+    printf("----------------------------------\n");
+    printf("                                  \n");
+    printf("        Insert Code & Name        \n");
+    printf("                                  \n");
     printf("If you want to quit input code [q]\n");
-    printf("---------------------------------\n");
-    printf("                                 \n");
+    printf("                                  \n");
+    printf("----------------------------------\n");
+    printf("                                  \n");
 
 	/*--- 파일에 데이터 저장 ---*/
-    rtn = Insert();
+    Insert();
 
 	/*--- 파일에 데이터 정렬 및 저장 ---*/
-	SortSave();
-
-    printf("                                 \n");
-    printf("Exit the Program.                \n");
-    printf("                                 \n");
+	rtn = SortSave();
+	if (rtn < 0)
+	{
+		printf("SortSave() error!! [%d]\n", errno);
+		return -1;
+	}
 
     return 0;
 }
