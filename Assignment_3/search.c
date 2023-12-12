@@ -83,13 +83,13 @@ int FileToMem(KEYNAME *knlist, int num)
     fd = open("./file.txt", O_RDONLY);
     if (fd < 0)
     {
-        printf("file open error! error[%d]\n", errno);
+        printf("file open error! error\n");
         return -1;
     }
 
-	for	(ii = 0; ii < num; ii++)
-	{
-		rlen = read(fd, rbuff, sizeof(KEYNAME));
+    for	(ii = 0; ii < num; ii++)
+    {
+        rlen = read(fd, rbuff, sizeof(KEYNAME));
 
         tkey = (KEYNAME *)rbuff;
 
@@ -98,7 +98,7 @@ int FileToMem(KEYNAME *knlist, int num)
 
     close(fd);
 
-	return 1;
+    return 1;
 }
 
 /******************************************************************************
@@ -117,18 +117,17 @@ int Search(KEYNAME *knlist, int num, char *key)
     strcpy(keyname.key, key);
 
     result = (KEYNAME *)bsearch(&keyname, knlist, num, sizeof(KEYNAME), Cmp);
-    if (result == NULL)
+    if (result == NULL) // 검색 실패
     {
-        printf("\n");
-        printf("Not Found. key[%s]\n", keyname.key);
         return -1;
     }
     else
     {
-        printf("\n");
+        printf("---------------------------------\n");
         printf("key : %-*.*s Name : %-*.*s\n",
             sizeof(result->key)-1, sizeof(result->key)-1, result->key,
             sizeof(result->name)-1, sizeof(result->name)-1, result->name);
+        printf("---------------------------------\n");
 
         return 1;
     }
@@ -147,6 +146,14 @@ int main()
     int     num          = 0;
     int     rtn;
 
+    printf("                                 \n");
+    printf("---------------------------------\n");
+    printf("                                 \n");
+    printf("    Enter a code to find name    \n");
+    printf("                                 \n");
+    printf("---------------------------------\n");
+    printf("                                 \n");
+
     while (1)
     {
         /*--- 메모리 할당 ---*/
@@ -159,29 +166,37 @@ int main()
         rtn = FileToMem(g_KnList, num);
         if (rtn < 0)
         {
+            printf("file open error! error[%d]\n");
             return -1;
         }
 
         /*--- 검색 키 입력받기 ---*/
-        printf("\n");
-        printf("[Search]\n");
-
-        printf("\n");
         printf("Input key : ");
         scanf("%s", key);
+        printf("                                 \n");
 
         /*--- 검색 수행 ---*/
         rtn = Search(g_KnList, num, key);
         if (rtn < 0)
         {
-            return -1;
+			printf("---------------------------------\n");
+			printf("Not Found. key[%s]\n", key);
+			printf("Search failed. Please try again. \n");
+			printf("---------------------------------\n");
         }
 
+        printf("                                 \n");
         printf("Do you search more? (1)yes (2)no : ");
-        scanf("%d", &user);
+        scanf("%d", &user); // 재검색 여부
+        printf("                                 \n");
 
-        if (user == 2)   // 2:no --> 프로그램 종료
+        if (user == 2) // 2:no 종료
+        {
+            printf("Exit the program.                \n");
+            printf("                                 \n");
             break;
+        }
+
 
         if (g_KnList != NULL)
             free(g_KnList);

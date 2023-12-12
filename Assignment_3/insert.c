@@ -41,27 +41,27 @@ RETURNED    : num - 파일 내 레코드 수
 ******************************************************************************/
 int FileCount()
 {
-	int			fd, rlen;
-	char		rbuff[BUFFER_SIZE] = {0,};
-	int			num				   = 0;
-	int			ii				   = 0;
+    int			fd, rlen;
+    char		rbuff[BUFFER_SIZE] = {0,};
+    int			num				   = 0;
+    int			ii				   = 0;
 
-	fd = open("./file.txt", O_RDONLY);
+    fd = open("./file.txt", O_RDONLY);
     if (fd < 0)
     {
         printf("file open error! error[%d]\n", errno);
         return -1;
     }
 
-	while ((rlen = read(fd, rbuff, sizeof(KEYNAME))) > 0)
-	{
-		if (rlen == sizeof(KEYNAME))
-			num++;
-	}
+    while ((rlen = read(fd, rbuff, sizeof(KEYNAME))) > 0)
+    {
+        if (rlen == sizeof(KEYNAME))
+            num++;
+    }
 
-	close(fd);
+    close(fd);
 
-	return num;
+    return num;
 }
 
 /******************************************************************************
@@ -109,77 +109,87 @@ RETURNED    : 1(SUCCESS)
 ******************************************************************************/
 int InputKeyName(KEYNAME *knlist)
 {
-	char temp[128];
+    char temp[128];
+    int  rtn = 0;
 
     /*--- key 입력 ---*/
     printf("Input Key[9] : ");
     scanf("%s", temp);
     memcpy(knlist->key, temp, strlen(temp));
 
-	/*--- q 입력시 프로그램 종료 ---*/
-	if(strcmp(knlist->key, "q") == 0)
-	{
-	    if (knlist != NULL)
-	        free(knlist);
+    /*--- q 입력시 프로그램 종료 ---*/
+    if(strcmp(knlist->key, "q") == 0)
+    {
+        if (knlist != NULL)
+            free(knlist);
+
+        /*--- 파일에 데이터 정렬 및 저장 ---*/
+        rtn = SortSave();
+        if (rtn < 0)
+        {
+            printf("SortSave() error!! [%d]\n", errno);
+            return -1;
+        }
 
         printf("                                  \n");
         printf("Exit the Program.                 \n");
         printf("                                  \n");
-	    exit(0); // 프로그램 종료
-	}
+        exit(0); // 프로그램 종료
 
-	/*--- Name 입력 ---*/
-	printf("Input Name[40] : ");
-	scanf("%s", temp);
-	memcpy(knlist->name, temp, strlen(temp));
+    }
+
+    /*--- Name 입력 ---*/
+    printf("Input Name[40] : ");
+    scanf("%s", temp);
+    memcpy(knlist->name, temp, strlen(temp));
     printf("                                 \n");
     printf("---------------------------------\n");
     printf("                                 \n");
 
-	return 1;
+    return 1;
 }
 
 /******************************************************************************
 FUNCTION    : DoubleChk
 DESCRIPTION : 키 중복 체키
 PARAMETERS  : int fd        - 파일 디스크립터
-			  char *inputkey- 입력받은 키
+              char *inputkey- 입력받은 키
 RETURNED    : 1(SUCCESS)
 ******************************************************************************/
 int DoubleChk(int fd, char *inputkey)
 {
-	KEYNAME *knlist = NULL;
-	int num = 0;
-	int ii;
+    KEYNAME *knlist = NULL;
+    int num = 0;
+    int ii;
 
-	num = FileCount();
+    num = FileCount();
 
-	knlist = (KEYNAME *)malloc(sizeof(KEYNAME) * num);
-	memset(knlist, 0x00, sizeof(KEYNAME) * num);
+    knlist = (KEYNAME *)malloc(sizeof(KEYNAME) * num);
+    memset(knlist, 0x00, sizeof(KEYNAME) * num);
 
-	FileToMem(knlist, num);
+    FileToMem(knlist, num);
 
-	for (ii = 0; ii < num; ii++)
-	{
-		if (strcmp(knlist[ii].key, inputkey) == 0)
-		{
+    for (ii = 0; ii < num; ii++)
+    {
+        if (strcmp(knlist[ii].key, inputkey) == 0)
+        {
             printf("                                 \n");
-			printf("A duplicate key exists.          \n");
+            printf("A duplicate key exists.          \n");
             printf("                                 \n");
-			printf("%-9s%-50s\n","[Key]", "[Name]");
-			printf(" %-*.*s%-*.*s\n",
-				sizeof(knlist[ii].key)-1, sizeof(knlist[ii].key)-1, knlist[ii].key,
-				sizeof(knlist[ii].name)-1, sizeof(knlist[ii].name)-1, knlist[ii].name);
+            printf("%-9s%-50s\n","[Key]", "[Name]");
+            printf(" %-*.*s%-*.*s\n",
+                sizeof(knlist[ii].key)-1, sizeof(knlist[ii].key)-1, knlist[ii].key,
+                sizeof(knlist[ii].name)-1, sizeof(knlist[ii].name)-1, knlist[ii].name);
             printf("                                 \n");
             printf("---------------------------------\n");
             printf("                                 \n");
-			free(knlist);
-			return -1; // 중복된 키가 있음을 나타내는 오류 코드 반환
-		}
-	}
+            free(knlist);
+            return -1; // 중복된 키가 있음을 나타내는 오류 코드 반환
+        }
+    }
 
-	free(knlist);
-	return 1; // 중복된 키가 없음을 나타내는 코드 반환
+    free(knlist);
+    return 1; // 중복된 키가 없음을 나타내는 코드 반환
 }
 
 /******************************************************************************
@@ -190,54 +200,53 @@ RETURNED    : 1(SUCCESS)
 ******************************************************************************/
 int Insert()
 {
-	int			 fd, rlen;
+    int			 fd, rlen;
 
-	KEYNAME		*knlist		 		= NULL, *tkey = NULL;
-	int			 ii, rtn, dup;
-	char         rbuff[BUFFER_SIZE] = {0,};
-	char       	 sbuff[64] 	 		= {0,};
-	int			 count		 		= 0;
-	char		 temp[128];
+    KEYNAME		*knlist		 		= NULL, *tkey = NULL;
+    int			 ii, rtn, dup;
+    char         rbuff[BUFFER_SIZE] = {0,};
+    char       	 sbuff[64] 	 		= {0,};
+    int			 count		 		= 0;
+    char		 temp[128];
 
+    /*--- 입력 ---*/
+    fd = open("./file.txt", O_RDWR | O_CREAT | O_APPEND, 0777); //누구나 파일을 읽고 쓸수 있음
+    if (fd < 0)
+    {
+        printf("file open error! error[%d]\n", errno);
+        return -1;
+    }
 
-	/*--- 입력 ---*/
-	fd = open("./file.txt", O_RDWR | O_CREAT | O_APPEND, 0777); //누구나 파일을 읽고 쓸수 있음
-	if (fd < 0)
-	{
-		printf("file open error! error[%d]\n", errno);
-		return -1;
-	}
+    while (1)
+    {
+        /*--- 메모리 할당 ---*/
+        knlist = (KEYNAME *)malloc(sizeof(KEYNAME));
+        memset(knlist, 0x00, sizeof(KEYNAME));
 
-	while (1)
-	{
-		/*--- 메모리 할당 ---*/
-		knlist = (KEYNAME *)malloc(sizeof(KEYNAME));
-		memset(knlist, 0x00, sizeof(KEYNAME));
+        InputKeyName(knlist);
 
-		InputKeyName(knlist);
-
-		/*--- 중복 체크 ---*/
-		rtn = DoubleChk(fd, knlist->key);
-		while (rtn < 0)
-		{
-			InputKeyName(knlist);
-			rtn = DoubleChk(fd, knlist->key);
-		}
+        /*--- 중복 체크 ---*/
+        rtn = DoubleChk(fd, knlist->key);
+        while (rtn < 0)
+        {
+            InputKeyName(knlist);
+            rtn = DoubleChk(fd, knlist->key);
+        }
         printf("                                 \n");
 
-		/*--- 파일에 쓰기 ---*/
-		write(fd, knlist, sizeof(KEYNAME));
+        /*--- 파일에 쓰기 ---*/
+        write(fd, knlist, sizeof(KEYNAME));
 
-		/*--- 메모리 해제 ---*/
-		if (knlist != NULL)
-		{
-			free(knlist);
-		}
-	}
+        /*--- 메모리 해제 ---*/
+        if (knlist != NULL)
+        {
+            free(knlist);
+        }
+    }
 
-	close(fd);
+    close(fd);
 
-	return 1;
+    return 1;
 }
 
 /******************************************************************************
@@ -248,37 +257,37 @@ RETURNED    : 1(SUCCESS)
 ******************************************************************************/
 int SortSave()
 {
-	int			 fd, rlen;
+    int			 fd, rlen;
 
-	KEYNAME		*knlist		 		= NULL, *tkey = NULL;
-	int			 ii, rtn;
-	char         rbuff[BUFFER_SIZE] = {0,};
-	char       	 sbuff[64] 	 		= {0,};
-	int			 count		 		= 0;
-	char		 temp[128];
+    KEYNAME		*knlist		 		= NULL, *tkey = NULL;
+    int			 ii, rtn;
+    char         rbuff[BUFFER_SIZE] = {0,};
+    char       	 sbuff[64] 	 		= {0,};
+    int			 count		 		= 0;
+    char		 temp[128];
 
     /*--- 전체 데이터 메모리 로드 및 정렬 --*/
-	fd = open("./file.txt", O_RDONLY);
+    fd = open("./file.txt", O_RDONLY);
     if (fd < 0)
     {
         printf("file open error! error[%d]\n", errno);
         return -1;
     }
 
-	count = FileCount();
-	knlist = (KEYNAME *)malloc(sizeof(KEYNAME) * count);
+    count = FileCount();
+    knlist = (KEYNAME *)malloc(sizeof(KEYNAME) * count);
     memset(knlist, 0x00, sizeof(KEYNAME) * count);
 
-	ii = 0;
+    ii = 0;
 
     while (rlen = read(fd, rbuff, sizeof(KEYNAME)) > 0)
     {
-	   	tkey = (KEYNAME *)rbuff;
-       	memcpy(&knlist[ii], tkey, sizeof(KEYNAME));
-		ii++;
+           tkey = (KEYNAME *)rbuff;
+           memcpy(&knlist[ii], tkey, sizeof(KEYNAME));
+        ii++;
 
-		if (ii >= count)
-			break;
+        if (ii >= count)
+            break;
     }
 
     close(fd);
@@ -286,26 +295,26 @@ int SortSave()
     // 배열을 정렬
     qsort(knlist, count, sizeof(KEYNAME), Cmp);
 
-	fd = open("./file.txt", O_WRONLY | O_TRUNC);
+    fd = open("./file.txt", O_WRONLY | O_TRUNC);
     if (fd < 0)
     {
         printf("file open error! error[%d]\n", errno);
         return -1;
     }
 
-	for (ii = 0; ii < count; ii++)
+    for (ii = 0; ii < count; ii++)
     {
         write(fd, &knlist[ii], sizeof(KEYNAME));
     }
 
-	if (knlist != NULL)
-	{
-		free(knlist);
-	}
+    if (knlist != NULL)
+    {
+        free(knlist);
+    }
 
     close(fd);
 
-	return 1;
+    return 1;
 }
 
 /******************************************************************************
@@ -316,7 +325,7 @@ RETURNED    : 0(SUCCESS)
 ******************************************************************************/
 int main()
 {
-	int rtn;
+    int rtn;
 
     printf("                                  \n");
     printf("----------------------------------\n");
@@ -328,16 +337,9 @@ int main()
     printf("----------------------------------\n");
     printf("                                  \n");
 
-	/*--- 파일에 데이터 저장 ---*/
+    /*--- 파일에 데이터 저장 ---*/
     Insert();
 
-	/*--- 파일에 데이터 정렬 및 저장 ---*/
-	rtn = SortSave();
-	if (rtn < 0)
-	{
-		printf("SortSave() error!! [%d]\n", errno);
-		return -1;
-	}
 
     return 0;
 }

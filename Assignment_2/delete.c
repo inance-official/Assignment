@@ -226,7 +226,6 @@ int Delete(CODENAME *cnlist, int count, char *delcode)
     fclose(fp);
 
     return 1;
-    return 1;
 }
 
 /******************************************************************************

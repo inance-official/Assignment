@@ -120,39 +120,40 @@ int Delete(KEYNAME *knlist, int count, char *delkey)
 
     for (ii = 0; ii < count; ii++)
     {
-    	kCmp = strcmp(knlist[ii].key, delkey);
+        kCmp = strcmp(knlist[ii].key, delkey);
 
         if (kCmp == 0)
         {
-            printf("\n");
+            printf("---------------------------------\n");
             printf("Key : %s\tName : %s\n", knlist[ii].key, knlist[ii].name);
+            printf("---------------------------------\n");
 
             memmove(&knlist[ii], &knlist[ii+1], sizeof(KEYNAME) * (count - ii));
             count--;
 
             printf("\n");
 
-			//배열을 정렬
-			qsort(knlist, count, sizeof(KEYNAME), Cmp);
+            //배열을 정렬
+            qsort(knlist, count, sizeof(KEYNAME), Cmp);
 
             /*--- 전체 데이터 신규 저장 --*/
-		    fd = open("./file.txt", O_WRONLY | O_TRUNC);
-		    if (fd < 0)
-			{
-				printf("file open error! error[%d]\n", errno);
-				return -1;
-			}
+            fd = open("./file.txt", O_WRONLY | O_TRUNC);
+            if (fd < 0)
+            {
+                printf("file open error! error[%d]\n", errno);
+                return -1;
+            }
 
-		    for (ii = 0; ii < count; ii++)
-		    {
-		        write(fd, &knlist[ii], sizeof(KEYNAME));
-		    }
+            for (ii = 0; ii < count; ii++)
+            {
+                write(fd, &knlist[ii], sizeof(KEYNAME));
+            }
 
-    		close(fd);
+            close(fd);
 
-			printf("Delete Complete\n");
-		}
-	}
+            printf("Delete Complete\n");
+        }
+    }
 
     if(kCmp != 0)
     {
@@ -175,6 +176,14 @@ int main()
     int     rtn;
     int     count            = 0;
 
+    printf("                                 \n");
+    printf("---------------------------------\n");
+    printf("                                 \n");
+    printf("  Enter a code to Delete recode   \n");
+    printf("                                 \n");
+    printf("---------------------------------\n");
+    printf("                                 \n");
+
     while (1)
     {
         /*--- 메모리 할당 ---*/
@@ -187,35 +196,39 @@ int main()
         rtn = FileToMem(g_KnList, count);
         if (rtn < 0)
         {
+            printf("file open error! error\n")
             return -1;
         }
 
         /*--- 키 입력 ---*/
-        printf("\n");
-        printf("[Delete]\n");
-        printf("\n");
-        printf("Input key : ");
+        printf("Input key(9) : ");
         scanf("%s", delkey);
+        printf("                                 \n");
 
         /*--- 삭제하고 재배열 ---*/
         rtn = Delete(g_KnList, count, delkey);
         if (rtn < 0)
         {
-            return -1;
+            printf("Delete failed. Please try again. \n");
+            printf("                                 \n");
         }
 
-        printf("Do you search more? (1)yes (2)no : ");
+        printf("Do you delete more? (1)yes (2)no : ");
         scanf("%d", &user);
+        printf("---------------------------------\n");
+        printf("                                 \n");
 
         if (user == 2)  // (2)no --> 프로그램 종료
-		{
+        {
+            printf("Exit the Program                 \n");
+            printf("                                 \n");
             break;
-		}
+        }
 
         if (g_KnList != NULL)
-		{
+        {
             free(g_KnList);
-		}
+        }
     }
 
     return 0;
