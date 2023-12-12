@@ -102,7 +102,7 @@ int CheckShmU()
 {
     int rtn;
 
-    rtn = lCheckShm();
+    rtn = GlobalCheckShm();
     if (rtn < 0)
         printf("None exist Shared Memory\n");
     else
@@ -165,7 +165,7 @@ int main()
             /*--- Create Shared Memory ---*/
             case 2:
                 printf("\n");
-                CreateShm();
+                GlobalCreateShm();
                 printf("\n");
                 break;
 
@@ -192,7 +192,7 @@ int main()
             /*--- Remove Shared Memory ---*/
             case 7:
                 printf("                                  \n");
-                RemoveShm();
+                GlobalRemoveShm();
                 printf("                                  \n");
                 break;
 

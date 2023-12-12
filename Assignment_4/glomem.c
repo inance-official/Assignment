@@ -18,7 +18,7 @@
 KEYNAME *g_KnList = NULL;
 
 /*--- System V shared memory Check ---*/
-int GloblaCreateShm()
+int GlobalCreateShm()
 {
 	int shmid;
 

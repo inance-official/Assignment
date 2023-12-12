@@ -94,7 +94,7 @@ int lInsertShm()
 	else
 		printf("Attach Success\n");
 
-	count = GlobalCountShm();
+	count = CountShm();
 
 	while (1)
 	{
@@ -124,7 +124,7 @@ int lInsertShm()
 	/*--- 데이터를 정렬 ---*/
 	qsort(g_KnList, count, sizeof(KEYNAME), Cmp);
 
-	DetachShm(g_KnList);
+	GlobalDetachShm(g_KnList);
 
 	return 1;
 }
