@@ -17,7 +17,12 @@
 
 KEYNAME *g_KnList = NULL;
 
-/*--- System V shared memory Check ---*/
+/******************************************************************************
+FUNCTION    : GlobalCreateShm
+DESCRIPTION : 공유 메모리 생성
+PARAMETERS  :
+RETURNED    : shmid - 공유 메모리 ID
+******************************************************************************/
 int GlobalCreateShm()
 {
 	int shmid;
@@ -47,7 +52,12 @@ int GlobalCreateShm()
 	return shmid;
 }
 
-/*--- System N shared memory Check ---*/
+/******************************************************************************
+FUNCTION    : GlobalCheckShm
+DESCRIPTION : 공유 메모리 존재 확인
+PARAMETERS  :
+RETURNED    : 1(SUCCESS), -1(FAIL)
+******************************************************************************/
 int GlobalCheckShm()
 {
 	int		shmid, shmin;
@@ -62,6 +72,12 @@ int GlobalCheckShm()
 
 }
 
+/******************************************************************************
+FUNCTION    : GlobalAttachShm
+DESCRIPTION : 공유 메모리 attach
+PARAMETERS  :
+RETURNED    : 1(SUCCESS), -1(FAIL)
+******************************************************************************/
 /*--- System V shared memory attach ---*/
 #if 0
 int GlobalAttachShm()
@@ -99,7 +115,12 @@ KEYNAME *GlobalAttachShm()
 	return g_KnList;
 }
 
-/*--- System V shared memory Detach ---*/
+/******************************************************************************
+FUNCTION    : GlobalDetachShm
+DESCRIPTION : 공유 메모리 detach
+PARAMETERS  :
+RETURNED    : 1(SUCCESS), -1(FAIL)
+******************************************************************************/
 int GlobalDetachShm()
 {
 	if (shmdt(g_KnList) < 0)
@@ -111,7 +132,12 @@ int GlobalDetachShm()
 	return 1;
 }
 
-/*--- System V shared memory Remove ---*/
+/******************************************************************************
+FUNCTION    : GlobalRemoveShm
+DESCRIPTION : 공유 메모리 삭제
+PARAMETERS  :
+RETURNED    : 1(SUCCESS), -1(FAIL)
+******************************************************************************/
 int GlobalRemoveShm()
 {
 	int shmid, ret;

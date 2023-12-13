@@ -3,7 +3,7 @@
  * DESCRIPTION : 공유 메모리 함수
  * DATE : 2020/09/04
  * AUTHOR : JH
- * ******************************************************************************/
+ ******************************************************************************/
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -31,7 +31,6 @@ int Cmp(const void *aa, const void *bb)
 	return strcmp(k1->key, k2->key);
 }
 
-/*--- shared memory 내부의 레코드 개수 ---*/
 /******************************************************************************
 FUNCTION    : CountShm
 DESCRIPTION : 공유 메모리 내의 레코드 개수
@@ -68,7 +67,7 @@ int CountShm()
 }
 
 /******************************************************************************
-FUNCTION    : InsertShm
+FUNCTION    : lInsertShm
 DESCRIPTION : 공유 메모리에 데이터 입력
 PARAMETERS  :
 RETURNED    :  1(SUCCESS)
@@ -85,8 +84,6 @@ int lInsertShm()
 	rtn = GlobalCheckShm();
 	if (rtn < 0)
 		GlobalCreateShm();
-	else
-		printf("create error!\n");
 
 	g_KnList = GlobalAttachShm();
 	if (g_KnList == NULL)
@@ -129,7 +126,6 @@ int lInsertShm()
 	return 1;
 }
 
-/*--- System V shared memory read ---*/
 /******************************************************************************
 FUNCTION    : ReadShm
 DESCRIPTION : 공유 메모리에 데이터 출력
@@ -182,7 +178,6 @@ int lReadShm()
 	return 1;
 }
 
-/*--- shared memory memmove ---*/
 /******************************************************************************
 FUNCTION    : SearchShm
 DESCRIPTION : 공유 메모리에 데이터 검색
@@ -261,7 +256,6 @@ int lSearchShm()
 	return 1;
 }
 
-/*--- shared memory memmove ---*/
 /******************************************************************************
 FUNCTION    : DeleteShm
 DESCRIPTION : 공유 메모리에 데이터 삭제
