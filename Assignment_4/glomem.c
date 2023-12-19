@@ -18,41 +18,6 @@
 KEYNAME *g_KnList = NULL;
 
 /******************************************************************************
-FUNCTION    : GlobalCreateShm
-DESCRIPTION : 공유 메모리 생성
-PARAMETERS  :
-RETURNED    : shmid - 공유 메모리 ID
-******************************************************************************/
-int GlobalCreateShm()
-{
-	int shmid;
-
-	shmid = shmget(SHM_KEY, MAX_ENTRIES * sizeof(KEYNAME), IPC_CREAT | PERM);
-	if (shmid < 0)
-	{
-		printf("create error! [%d] : %s\n", errno, strerror(errno));
-		return -1;
-	}
-	else
-	{
-		printf("Success Create Shared Memory [%d]\n", shmid);
-	}
-
-	g_KnList = shmat(shmid, NULL, 0);
-	if (g_KnList < 0)
-	{
-		printf("Failed to attach shared memory: %s\n", strerror(errno));
-		return -1;
-	}
-
-	memset(g_KnList, 0x00, MAX_ENTRIES * sizeof(KEYNAME));
-
-	shmdt(g_KnList);
-
-	return shmid;
-}
-
-/******************************************************************************
 FUNCTION    : GlobalCheckShm
 DESCRIPTION : 공유 메모리 존재 확인
 PARAMETERS  :
@@ -60,17 +25,44 @@ RETURNED    : 1(SUCCESS), -1(FAIL)
 ******************************************************************************/
 int GlobalCheckShm()
 {
-	int		shmid, shmin;
-	struct	shmid_ds shminfo;
+    int     shmid, shmin;
+    struct  shmid_ds shminfo;
 
-	shmid = shmget(SHM_KEY, 0, PERM);
-	if (shmid < 0) return -1;
+    shmid = shmget(SHM_KEY, 0, PERM);
+    if (shmid < 0) return -1;
 
-	// 상태정보 검색하여 공유 메모리 세그먼트 존재 확인
-	shmin = shmctl(shmid, IPC_STAT, &shminfo);
-	if (shmin == 0) return 1;
+    // 상태정보 검색하여 공유 메모리 세그먼트 존재 확인
+    shmin = shmctl(shmid, IPC_STAT, &shminfo);
+    if (shmin == 0) return shmid;
 
 }
+
+
+/******************************************************************************
+FUNCTION    : GlobalCreateShm
+DESCRIPTION : 공유 메모리 생성
+PARAMETERS  :
+RETURNED    : shmid - 공유 메모리 ID
+******************************************************************************/
+int GlobalCreateShm()
+{
+    int shmid;
+
+    shmid = shmget(SHM_KEY, MAX_ENTRIES * sizeof(KEYNAME), IPC_CREAT | PERM);
+    if (shmid < 0)
+        return -1;
+
+    g_KnList = shmat(shmid, NULL, 0);
+    if (g_KnList < 0)
+        return -1;
+
+    memset(g_KnList, 0x00, MAX_ENTRIES * sizeof(KEYNAME));
+
+    shmdt(g_KnList);
+
+    return shmid;
+}
+
 
 /******************************************************************************
 FUNCTION    : GlobalAttachShm

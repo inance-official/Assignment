@@ -67,23 +67,64 @@ int CountShm()
 }
 
 /******************************************************************************
+FUNCTION    : CheckDuplicateKey
+DESCRIPTION : 중복된 키 체크
+PARAMETERS  : char* inputKey - 입력받은 키
+RETURNED    : -1(중복된 키 발견), 1(중복된 키 없음)
+******************************************************************************/
+int CheckDuplicateKey(char* inputKey)
+{
+	int count = CountShm();
+
+	for (int i = 0; i < count; i++)
+	{
+		if (strcmp(g_KnList[i].key, inputKey) == 0)
+		{
+			return -1; // 중복된 키 발견
+		}
+	}
+	return 1; // 중복된 키 없음
+}
+
+/******************************************************************************
+FUNCTION    : inputKeyAndName
+DESCRIPTION : 키와 이름 입력
+PARAMETERS  : KEYNAME* knlist - 입력받은 키와 이름을 저장할 메모리
+RETURNED    :
+******************************************************************************/
+void inputKeyAndName(KEYNAME* knlist) {
+	char temp[128];
+
+	printf("\n");
+	printf("Input Key[9] : ");
+	scanf("%s", temp);
+	memcpy(knlist->key, temp, strlen(temp));
+
+	/*--- Name 입력 ---*/
+	printf("Input Name[40] : ");
+	scanf("%s", temp);
+	memcpy(knlist->name, temp, strlen(temp));
+}
+
+/******************************************************************************
 FUNCTION    : lInsertShm
-DESCRIPTION : 공유 메모리에 데이터 입력
+DESCRIPTION : 공유 메모리에 데이터 추가
 PARAMETERS  :
-RETURNED    :  1(SUCCESS)
+RETURNED    : 1(SUCCESS)
 ******************************************************************************/
 int lInsertShm()
 {
-	int 		shmid;
-	int			count		= 0;
-	int			ii;
-	int			rtn;
-	KEYNAME    *tkey  		= NULL;
-	char		temp[128] 	= {0,};
+	int         shmid;
+	int            count        = 0;
+	int            ii;
+	int            rtn;
+	KEYNAME    *tkey          = NULL;
+	char        temp[128]     = {0,};
 
 	rtn = GlobalCheckShm();
 	if (rtn < 0)
 		GlobalCreateShm();
+		printf("Create SHM [ID : %d]\n", rtn);
 
 	g_KnList = GlobalAttachShm();
 	if (g_KnList == NULL)
@@ -95,27 +136,23 @@ int lInsertShm()
 
 	while (1)
 	{
-	    printf("\n");
+		inputKeyAndName(&g_KnList[count]);
 
-	    /*--- key 입력 ---*/
-	    printf("Input Key[9] : ");
-	    scanf("%s", temp);
-	    if (strcmp(temp, "q") == 0)
-			break;
-	    else
-			memcpy(g_KnList[count].key, temp, strlen(temp));
+		/*--- 중복 체크 ---*/
+		rtn = CheckDuplicateKey(g_KnList[count].key);
+		while (rtn < 0)
+		{
+			printf("중복된 키가 있습니다: %s\n", g_KnList[count].key);
+			inputKeyAndName(&g_KnList[count]);
+			rtn = CheckDuplicateKey(g_KnList[count].key);
+		}
 
-	    /*--- Name 입력 ---*/
-	    printf("Input Name[40] : ");
-	    scanf("%s", temp);
-	    memcpy(g_KnList[count].name, temp, strlen(temp));
-
-	    count++;
-	    if (count >= MAX_ENTRIES)
-	    {
+		count++;
+		if (count >= MAX_ENTRIES)
+		{
 			printf("Maximum number of entries reached.\n");
 			break;
-	    }
+		}
 	}
 
 	/*--- 데이터를 정렬 ---*/

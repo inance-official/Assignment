@@ -17,6 +17,73 @@
 #include "glomem.h"
 
 /******************************************************************************
+FUNCTION    : CheckShmU
+DESCRIPTION : 공유 메모리 존재 여부 확인
+PARAMETERS  :
+RETURNED    : 1(SUCCESS)
+******************************************************************************/
+int CheckShmU()
+{
+    int rtn;
+
+    rtn = GlobalCheckShm();
+    if (rtn < 0)
+	{
+        printf("                                  \n");
+        printf("None exist Shared Memory\n");
+        printf("                                  \n");
+	}
+    else
+	{
+        printf("                                  \n");
+        printf("Exist Shared Memory\n");
+        printf("                                  \n");
+	}
+
+    return 1;
+}
+
+
+/******************************************************************************
+FUNCTION    : CreateShmU
+DESCRIPTION : 공유 메모리 생성
+PARAMETERS  :
+RETURNED    : 1(SUCCESS)
+******************************************************************************/
+int CreateShmU()
+{
+
+	int rtn;
+
+    rtn = GlobalCheckShm();
+    if (rtn < 0)
+	{
+        printf("                                  \n");
+        printf("Already Exist Shared Memory\n");
+        printf("Shmid : ID : %d\n", rtn);
+        printf("                                  \n");
+
+        return 1;
+	}
+
+    rtn = GlobalCreateShm();
+    if (rtn < 0)
+    {
+        printf("                                  \n");
+        printf("GlobalCreateShm() error!!\n");
+        printf("                                  \n");
+    }
+    else
+    {
+        printf("                                  \n");
+        printf("Create SHM [ID : %d]\n", rtn);
+        printf("                                  \n");
+    }
+
+    return 1;
+}
+
+/******************************************************************************
 FUNCTION    : InsertShmU
 DESCRIPTION : 공유 메모리에 데이터 추가
 PARAMETERS  :
@@ -27,8 +94,13 @@ int InsertShmU()
 
     /*--- Insert ---*/
     printf("                                  \n");
-    printf("Insert Key & Name                 \n");
-    printf("If you want to quit input key [q] \n");
+    printf("*--------------------------------*\n");
+    printf("                                  \n");
+    printf("        Insert Key & Name         \n");
+    printf("        Quit input key [q]        \n");
+    printf("                                  \n");
+    printf("*--------------------------------*\n");
+    printf("                                  \n");
 
     lInsertShm();
 
@@ -92,41 +164,6 @@ int DeleteShmU()
 }
 
 /******************************************************************************
-FUNCTION    : CheckShmU
-DESCRIPTION : 공유 메모리 존재 여부 확인
-PARAMETERS  :
-RETURNED    : 1(SUCCESS)
-******************************************************************************/
-int CheckShmU()
-{
-    int rtn;
-
-    rtn = GlobalCheckShm();
-    if (rtn < 0)
-	{
-        printf("                                  \n");
-        printf("*--------------------------------*\n");
-        printf("|                                |\n");
-        printf("|   None exist Shared Memory     |\n");
-        printf("|                                |\n");
-        printf("*--------------------------------*\n");
-        printf("                                  \n");
-	}
-    else
-	{
-        printf("                                  \n");
-        printf("*--------------------------------*\n");
-        printf("|                                |\n");
-        printf("|       Exist Shared Memory      |\n");
-        printf("|                                |\n");
-        printf("*--------------------------------*\n");
-        printf("                                  \n");
-	}
-
-    return 1;
-}
-#if 1
-/******************************************************************************
 FUNCTIONS   : Usage
 DESCRIPTION : Usage display
 PARAMETERS  : int argc    - Excution argument number
@@ -147,7 +184,7 @@ char  **argv;
     printf("|                                |\n");
     printf("|   [1] Check Shared Memory      |\n");
     printf("|   [2] Create Shared Memory     |\n");
-    printf("|   [3] Add                      |\n");
+    printf("|   [3] Insert                   |\n");
     printf("|   [4] Read                     |\n");
     printf("|   [5] Search                   |\n");
     printf("|   [6] Delete                   |\n");
@@ -160,7 +197,6 @@ char  **argv;
     printf("                                  \n");
     printf("                                  \n");
 }
-#endif
 
 /******************************************************************************
 FUNCTION    : main
@@ -184,7 +220,7 @@ int main(int argc, char **argv)
     }
 
     if      (argv[1][0]=='1') CheckShmU();
-    else if (argv[1][0]=='2') GlobalCreateShm();
+    else if (argv[1][0]=='2') CreateShmU();
     else if (argv[1][0]=='3') InsertShmU();
     else if (argv[1][0]=='4') ReadShmU();
     else if (argv[1][0]=='5') SearchShmU();
