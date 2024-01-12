@@ -10,6 +10,11 @@
 
 - key에 대한 중복값 예외
 
+- util 사용법
+
+```bash
+$ ./utilM [ Function Number]
+```
 
 - utilM.c
     - main
@@ -23,7 +28,7 @@
 - kntable.h
     - define 값과 구조체
 - file.txt
-    - 데이터만 저장된 파체체
+    - 데이터만 저장된 파일
 
 # Formatting
 - 기본 형식
@@ -307,8 +312,6 @@ int main()
 {
 
 }
-
-
 ```
 
 
