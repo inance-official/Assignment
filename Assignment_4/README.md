@@ -12,11 +12,11 @@
   - [Usage](#usage)
   - [SHM check](#shm-check)
   - [Create SHM](#create-shm)
-  - [Add](#Add)
-  - [Read](#Read)
-  - [Search](#Search)
-  - [Delete](#Delete)
-  - [Remove SHM](#Remove-SHM)
+  - [Add](#add)
+  - [Read](#read)
+  - [Search](#search)
+  - [Delete](#delete)
+  - [Remove SHM](#remove-shm)
 
 # Question
 
