@@ -1,6 +1,6 @@
-# Table
+# Assigment_4 SHM - one main
 
-- [Table](#table)
+- [Assigment\_4 SHM - one main](#assigment_4-shm---one-main)
 - [Question](#question)
 - [Formatting](#formatting)
   - [kntable.h](#kntableh)

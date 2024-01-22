@@ -1,6 +1,6 @@
-# Table
+# Assigment_5 file disk speed test
 
-- [Table](#table)
+- [Assigment\_5 file disk speed test](#assigment_5-file-disk-speed-test)
 - [Question](#question)
 - [Input \& Output example](#input--output-example)
 

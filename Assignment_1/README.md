@@ -1,6 +1,17 @@
+Assigment_1 File I/O - f series
+======
+
+
+- [Assigment\_1 File I/O - f series](#assigment_1-file-io---f-series)
 - [Question](#question)
 - [Formatting](#formatting)
-- [Input & Output example](#input--output-example)
+- [Input \& Output example](#input--output-example)
+	- [Insert](#insert)
+	- [file.txt](#filetxt)
+	- [Read](#read)
+	- [Search](#search)
+	- [Exit](#exit)
+	- [Makefile](#makefile)
 
 # Question
 이 프로젝트는 9자리의 코드와 40자리의 이름을 파일에 쓰고 읽어오며, 코드를 기준으로 검색할 수 있는 프로그램을 개발하는 것
